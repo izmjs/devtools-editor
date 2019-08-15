@@ -1,0 +1,11 @@
+form.ui.form {
+  max-height: 370px;
+  overflow-y: auto;
+  max-width: initial;
+}
+
+.ui.top.attached.tabular.menu {
+  .item:first-child {
+    margin-left: -1px;
+  }
+}

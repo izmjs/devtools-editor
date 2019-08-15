@@ -1,0 +1,15 @@
+<mat-chip-list>
+  <div>
+    <button
+      mat-button="mat-button"
+      class="btn btn-success waves-light"
+      (click)="goto($event, -1)"
+    >
+      <mat-icon>home</mat-icon>
+    </button>
+
+    <a *ngFor="let item of getParts(currentUrl); let i = index">
+      <mat-chip (click)="goto($event, i)">{{item}}</mat-chip>
+    </a>
+  </div>
+</mat-chip-list>

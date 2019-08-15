@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-md-12">
+    <app-breadcrumb [currentUrl]="current?.path" (goToUrl)="redisplay($event)"></app-breadcrumb>
+  </div>
+  <div class="col-md-4">
+    <app-controllers-explorer [entries]="folders" (select)="onSelect($event)"></app-controllers-explorer>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+.example-container {
+  height: 100%;
+  width: 100%;
+}
+
+mat-sidenav-content {
+  background-color: white;
+}
+
+mat-sidenav {
+  background-color: #e0e0e0;
+}
+
+mat-icon {
+  font-size: 35px !important;
+  color: #424242 !important;
+  margin-top: -30px;
+  margin-left: -5px;
+}
+
+.mat-drawer-side {
+  border-right: none;
+  background: #efefef;
+}
+
+.custom-class mat-icon {
+  vertical-align: middle;
+}
+
+mat-nav-list a {
+  padding: 10px 5px;
+}
+
+.active {
+  background-color: #bdbdbd !important;
+}
+
+.valign-center {
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
+  align-items: center;
+}
+
+div.main-container {
+  padding: 10px;
+  min-height: 100%;
+  background-color: white;
+}

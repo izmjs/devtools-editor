@@ -1,0 +1,70 @@
+<div *ngIf="item" class="field">
+  <label>{{item.name}}
+    <a class="circular mini ui icon" suiPopup
+      *ngIf="item.description && item.link"
+      [popupText]="item.description"
+      [href]="item.link || ''">
+      <i class="info circle icon"></i>
+    </a>
+    <a class="circular mini ui icon" suiPopup
+      *ngIf="item.description && !item.link"
+      [popupText]="item.description">
+      <i class="info circle icon"></i>
+    </a>
+    <a class="circular mini ui icon" suiPopup
+      (click)="onClear(item)"
+      *ngIf="item.value!==item.defaultValue"
+      popupText="Set default value">
+      <i class="undo circle icon"></i>
+    </a>
+  </label>
+  <div *ngIf="item.field?.type==='number' || item.schema?.type==='number' || item.schema?.type==='integer'" class="ui input">
+    <input type="number"
+      #model="ngModel"
+      [(ngModel)]="item.value"
+      (blur)="onEdit(model, item)"
+      [placeholder]="item.defaultValue || item.name">
+  </div>
+  <div *ngIf="item.field?.type==='password'">
+    <div class="ui input">
+      <input type="password"
+        autocomplete="new-password"
+        #model="ngModel"
+        [(ngModel)]="item.value"
+        (blur)="onEdit(model, item)"
+        [placeholder]="item.defaultValue || item.name">
+    </div>
+  </div>
+  <div *ngIf="item.field?.type==='checkbox' || item.schema?.type==='boolean'">
+    <sui-checkbox
+      #model="ngModel"
+      [(ngModel)]="item.value"
+      (ngModelChange)="onEdit(model, item, true)">
+    </sui-checkbox>
+  </div>
+  <div *ngIf="!item.field?.type && (!item.schema || item.schema.type==='string')">
+    <div *ngIf="item.schema?.enum; else elseBlock">
+      <sui-select
+        class="selection"
+        #model="ngModel"
+        [(ngModel)]="item.value"
+        (ngModelChange)="onEdit(model, item, true)"
+        [placeholder]="item.defaultValue || item.name">
+        <sui-select-option
+          *ngFor="let enumeration of item.schema?.enum"
+          [value]="enumeration">
+        </sui-select-option>
+      </sui-select>
+    </div>
+    <ng-template #elseBlock>
+      <div class="ui input">
+        <input type="text"
+          autocomplete="autocomplete_off_xfr4!k"
+          #model="ngModel"
+          [(ngModel)]="item.value"
+          (blur)="onEdit(model, item)"
+          [placeholder]="item.defaultValue || item.name">
+      </div>
+    </ng-template>
+  </div>
+</div>

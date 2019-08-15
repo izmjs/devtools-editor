@@ -1,0 +1,30 @@
+<img class="left floated ui tiny image"
+  [src]="getLogo()">
+<div class="header">
+  {{item.name}}
+</div>
+<div class="meta">
+  version: {{item.version}}
+</div>
+<div class="description">
+  <p>
+    {{item.description | truncate : 40 }}
+  </p>
+  <span class="actions">
+    <i *ngIf="item.installed" class="right floated icon green check circular inverted link" (click)="onRemove(item)"></i>
+    <i *ngIf="!item.installed" class="download icon right floated circular inverted orange link" (click)="onInstall(item)"></i>
+    <a *ngIf="item.links?.repository" target="_blank" [href]="item.links.repository">
+      <i class="right blue inverted circular floated icon github link"></i>
+    </a>
+    <a *ngIf="item.links?.homepage" target="_blank" [href]="item.links.homepage">
+      <i class="right blue inverted circular floated icon home link"></i>
+    </a>
+    <a *ngIf="item.links?.bugs" target="_blank" [href]="item.links.bugs">
+      <i class="right blue inverted circular floated icon bug link"></i>
+    </a>
+    <a target="_blank" [href]="'https://www.npmjs.com/package/' + item.name">
+      <i class="right blue inverted circular floated icon npm link"></i>
+    </a>
+    <!-- <i class="download icon right floated circular inverted orange"></i> -->
+  </span>
+</div>

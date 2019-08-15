@@ -1,0 +1,9 @@
+<app-meta [metadata]="meta$ | async" (save)="onMetadaSave($event)" ></app-meta>
+<app-dependencies
+  [installed]="installed$ | async"
+  [items]="list$ | async"
+  [loading]="loading$ | async"
+  (type)="onTypeChange($event)"
+  (search)="onSearch($event)"
+  (install)="onInstall($event)"
+></app-dependencies>

@@ -1,0 +1,121 @@
+<div class="cards">
+  <mat-card
+    *ngFor="let entry of entries"
+    [ngClass]="{'grayb':entry.type==='controller' ,'greenb':entry.loaded,'redb':!entry.loaded}"
+    style="text-align: center;"
+  >
+  <!-- Display entries based on type (folder,file,controller) -->
+    <mat-card-content>
+      <div *ngIf="getType(entry)">
+        <mat-icon
+          class="glyphicon folder"
+          suiPopup="suiPopup"
+          [popupTemplate]="popupTemplateFileFolder"
+          popupPlacement="right top"
+          (click)="eventClick(entry)"
+          *ngIf="entry.type==='folder'"
+        >folder</mat-icon>
+
+        <mat-icon
+          class="glyphicon file badgeColor"
+          suiPopup="suiPopup"
+          [popupTemplate]="popupTemplateFileFolder"
+          popupPlacement="right top"
+          (click)="eventClick(entry)"
+          *ngIf="entry.type==='file'"
+          [matBadge]="entry.children.length"
+          matBadgeOverlap="false"
+        >insert_drive_file</mat-icon>
+
+  <!-- show the spinner on uploding data from the server -->
+        <div class="uploader-status">
+          <mat-spinner
+            *ngIf="entry.loading"
+            diameter="15"
+          ></mat-spinner>
+        </div>
+      </div>
+
+      <mat-icon
+        class="glyphicon controller"
+        suiPopup="suiPopup"
+        popupInverted="popupInverted"
+        [popupTemplate]="popupTemplateController"
+        popupPlacement="right top"
+        *ngIf="entry.type==='controller'"
+      >functions</mat-icon>
+
+  <!-- show the edit button in the controller -->
+      <button mat-icon-button
+      class="button-edit"
+      *ngIf="entry.type==='controller'"
+      (click)="eventClick(entry)"
+      >
+        <mat-icon
+          class="material-icons icon-edit"
+          >edit
+        </mat-icon>
+      </button>
+    </mat-card-content>
+
+    <!-- Templates Popups -->
+    <!-- to format the data displayed on the popup FileFolder  -->
+    <ng-template #popupTemplateFileFolder>
+      <div class="header">
+        <span class="lightGray">
+          <sup>@{{entry.type}}</sup>
+        </span>
+        <br>
+        <span class="primaryColor">
+          <b class="xSmall">{{entry.name}}</b>
+        </span>
+      </div>
+      <div class="content">
+        <em
+          class="lightGray"
+          *ngIf="entry.loaded"
+        >Scanned</em>
+        <em
+          class="lightGray"
+          *ngIf="!entry.loaded"
+        >Not Scanned</em>
+      </div>
+    </ng-template>
+
+    <!-- to format the data displayed on the popup controller -ispiring from VScode model -->
+    <ng-template #popupTemplateController>
+      <div class="header">
+        <span class="lightGray">
+          <sup>@{{entry.type}}</sup>
+        </span>
+      </div>
+      <div class="content">
+        <span class="purple">function</span>
+        <span class="orange"> {{entry.title}}</span>
+        (
+        <span class="xSmall blue">
+          <i>{{ getParams(entry) }}</i>
+        </span>
+        )
+        <div class="margin xSmall">
+          <hr>
+          <span class="lightGray">{{entry.description}}</span>
+        </div>
+          <br>
+          <div *ngFor="let param of entry.params">
+            <span class="yellow">
+              @Param
+            </span>
+            <span class="bgName">
+              <b>{{param.name}}</b>
+            </span>
+            <em>{{param.type}}</em>
+            <br>
+            <span class="lightGray xSmall">{{param.description}}</span>
+          </div>
+      </div>
+    </ng-template>
+
+    <mat-card-subtitle>{{entry.name}}</mat-card-subtitle>
+  </mat-card>
+</div>

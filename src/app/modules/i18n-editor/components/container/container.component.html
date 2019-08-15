@@ -1,0 +1,11 @@
+<app-i18n
+  #compo
+  [lngs]="languages"
+  [entries]="sentences"
+  (remove)="onRemove($event)"
+  (update)="onUpdate($event)"
+  (create)="onCreate($event)"
+  (removeLanguage)="onRemoveLanguage($event)"
+  (updateLanguage)="onUpdateLanguage($event)"
+  (addLanguage)="onAddLanguage($event)"
+></app-i18n>

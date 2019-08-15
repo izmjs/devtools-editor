@@ -1,0 +1,36 @@
+<sui-tabset *ngIf="items.length > 0">
+  <div class="ui top attached tabular menu">
+    <a class="item" suiTabHeader="static">
+      Introduction
+    </a>
+    <a
+      *ngFor="let item of items; let i = index"
+      class="item"
+      [(isActive)]="activeTab[i]"
+      [suiTabHeader]="i"
+    >{{item.name | asTitle}}</a>
+  </div>
+  <div *ngFor="let item of items; let i = index" class="ui bottom attached segment" [suiTabContent]="i">
+    <form class="ui form grid" autocomplete="off">
+       <app-config-field
+          class="eight wide column"
+          *ngFor="let field of item.items"
+          [item]="field"
+          [scope]="item"
+          (edit)="onSave($event)"
+          (clear)="onClear($event)"
+        >
+       </app-config-field>
+    </form>
+  </div>
+  <div class="ui bottom attached segment" suiTabContent="static">
+    <p>This modal helps you to easily edit your env variables.</p>
+
+    <p>Example of an env file:<br>
+      <code># Globals <br>
+DEBUG=modules:*,config:* <br>
+NODE_ENV=development <br>
+</code>
+    </p>
+  </div>
+</sui-tabset>

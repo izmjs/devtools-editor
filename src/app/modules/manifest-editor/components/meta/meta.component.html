@@ -1,0 +1,74 @@
+<form class="ui form" #form="ngForm">
+  <div class="ui four column middle aligned stackable grid">
+    <div class="ui four wide column center aligned">
+      <div class="ui image">
+        <a class="ui right corner label" (click)="onLogo()">
+          <i class="edit icon"></i>
+        </a>
+        <img [src]="getLogo()" width="150px" class="ui small rounded image" alt="avatar image">
+      </div>
+      <div class="ui icon input logo" *ngIf="logo">
+        <input (keyup)="onLogoKeyUp($event)" type="text" [(ngModel)]="logo" name="logo" #logoInput>
+        <i class="check circle outline link icon" (click)="onSetLogo(logo)"></i>
+        <i class="undo link icon" (click)="onCancelLogo()"></i>
+      </div>
+    </div>
+    <div class="ui four wide column">
+      <div class="field">
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          tabindex="1"
+          (focusout)="onSave()"
+          placeholder="Name"
+          [(ngModel)]="metadata.name">
+      </div>
+      <div class="field">
+        <label>Version</label>
+        <input
+          type="text"
+          name="version"
+          tabindex="3"
+          (focusout)="onSave()"
+          placeholder="Module version (example: 1.0.0)"
+          [(ngModel)]="metadata.version">
+      </div>
+    </div>
+    <div class="ui four wide column">
+      <div class="field">
+        <label>Author email address</label>
+        <input
+          type="text"
+          name="author.email"
+          tabindex="2"
+          (focusout)="onSave()"
+          placeholder="user@example.com"
+          [(ngModel)]="metadata.author.email">
+      </div>
+      <div class="field">
+        <label>License</label>
+        <input
+          type="text"
+          tabindex="4"
+          name="license"
+          (focusout)="onSave()"
+          placeholder="License"
+          [(ngModel)]="metadata.license">
+      </div>
+    </div>
+    <div class="ui four wide column">
+      <div class="field">
+        <label>Description</label>
+        <textarea
+          rows="5"
+          tabindex="5"
+          (focusout)="onSave()"
+          name="metadata.description"
+          placeholder="Module description"
+          [(ngModel)]="metadata.description">
+        </textarea>
+      </div>
+    </div>
+  </div>
+</form>

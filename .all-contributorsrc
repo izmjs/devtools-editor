@@ -1,0 +1,12 @@
+{
+  "projectName": "devtools",
+  "projectOwner": "midrissi",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": []
+}

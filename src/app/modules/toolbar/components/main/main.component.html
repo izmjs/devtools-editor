@@ -1,0 +1,33 @@
+<mat-toolbar>
+  <mat-toolbar-row class="toolbar-icons">
+    <span class="example-spacer"></span>
+    <sui-select
+      class="selection"
+      placeholder="Change the namespace"
+      labelField="name"
+      [(ngModel)]="current"
+      (selectedOptionChange)="onNameSpaceChange($event)">
+      <sui-select-option
+        *ngFor="let option of namespaces"
+        [value]="option">
+      </sui-select-option>
+    </sui-select>
+    <button matTooltip="Refresh namespaces list" mat-icon-button="mat-icon-button" (click)="refreshNS()">
+      <i class="material-icons">autorenew</i>
+    </button>
+    <button matTooltip="Restart the server" mat-stroked-button (click)="restart()" [disabled]="restarting">
+      <i class="material-icons">
+        refresh
+      </i> Restart
+    </button>
+    <button matTooltip="Create a new module" mat-icon-button="mat-icon-button" (click)="createModule()">
+      <i class="material-icons">add</i>
+    </button>
+    <button matTooltip="Open the project in your prefered IDE" mat-icon-button="mat-icon-button" (click)="editProject()">
+      <i class="material-icons">code</i>
+    </button>
+    <button matTooltip="Edit the settings" mat-icon-button="mat-icon-button" (click)="editSettings()">
+      <i class="material-icons">settings</i>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

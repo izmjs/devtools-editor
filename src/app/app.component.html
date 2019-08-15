@@ -1,0 +1,44 @@
+<mat-sidenav-container [class]="'example-container theme-wrapper ' + (theme$ | async)">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
+    <mat-nav-list>
+      <div class="valign-center">
+        <a mat-list-item disableRipple routerLink='/about' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="Home page" matTooltipPosition="after">
+            home
+          </mat-icon>
+        </a>
+        <a mat-list-item disableRipple routerLink='/manifest-editor' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="Manifest Editor" matTooltipPosition="after">
+            move_to_inbox
+          </mat-icon>
+        </a>
+        <a mat-list-item disableRipple routerLink='/route-designer' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="Routes Designer" matTooltipPosition="after">
+            timeline
+          </mat-icon>
+        </a>
+        <a mat-list-item disableRipple routerLink='/i18n-editor' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="I18N Editor" matTooltipPosition="after">
+            translate
+          </mat-icon>
+        </a>
+        <a mat-list-item disableRipple routerLink='/model-designer' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="Model Designer" matTooltipPosition="after">
+            layers
+          </mat-icon>
+        </a>
+        <a mat-list-item disableRipple routerLink='/api-designer' [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon matTooltip="API Designer" matTooltipPosition="after">
+            format_shapes
+          </mat-icon>
+        </a>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-toolbar></app-toolbar>
+    <div class="main-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

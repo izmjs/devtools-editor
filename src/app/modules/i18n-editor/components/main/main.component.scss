@@ -1,0 +1,107 @@
+div.main {
+  position: relative;
+
+  .ui.progress.active {
+    margin: 0px;
+
+    .bar {
+      height: 10px;
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  table.ui.table {
+    margin-top: 0;
+
+    &.working,
+    &.working thead tr th {
+      color: #cacaca;
+    }
+
+    thead {
+      user-select: none;
+
+      span.details {
+        font-weight: 400;
+        font-style: italic;
+        font-size: 11px;
+      }
+
+      div.actions {
+        margin-top: 10px;
+      }
+
+      tr th:not(:last-child) {
+        min-width: 200px;
+      }
+
+      tr th:last-child {
+        min-width: 100px;
+      }
+    }
+    tbody {
+      tr {
+        cursor: pointer;
+        div.ui.input {
+          width: 100%;
+          input {
+            text-align: center;
+          }
+        }
+
+        .info {
+          .message {
+            color: #556fd6;
+          }
+
+          input {
+            border-color: #556fd6;
+          }
+        }
+
+        .danger {
+          .message {
+            color: #fd7474;
+          }
+
+          input {
+            border-color: #fd7474;
+          }
+        }
+
+        .warning {
+          background: initial !important;
+          .message {
+            color: #fdc274;
+          }
+
+          input {
+            border-color: #fdc274;
+          }
+        }
+
+        .message {
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  .add-language {
+    sui-select {
+      width: 200px;
+
+      ::ng-deep div.text {
+        font-size: 16px;
+        margin-top: 16px;
+        margin-left: 10px;
+      }
+    }
+
+    .ui.circular.button {
+      margin-left: 5px;
+      border-radius: 10em;
+    }
+  }
+}

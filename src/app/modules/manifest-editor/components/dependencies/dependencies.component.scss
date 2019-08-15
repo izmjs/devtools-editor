@@ -1,0 +1,66 @@
+div.content {
+  padding: 10px;
+  display: block;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: #eeeeee;
+
+  div.search {
+    float: right;
+  }
+}
+
+div.menu {
+  border: none;
+  display: flex;
+
+  h5 {
+    margin-top: 10px;
+  }
+
+  div.menus {
+    margin-top: 30px;
+    margin: 0 auto;
+    display: flex;
+
+    a.item {
+      border: none;
+      color: #004fa0;
+      padding-left: 5px;
+      padding-right: 5px;
+      background: transparent;
+      border-bottom: 1px solid;
+      cursor: pointer;
+
+      &.active {
+        margin-bottom: 0;
+        border-bottom: 3px solid;
+        background: transparent;
+      }
+    }
+  }
+}
+
+div.segment {
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 10px;
+  min-height: 100px;
+  background: transparent;
+
+  mat-chip-list {
+    margin-bottom: 10px;
+    display: block;
+
+    mat-chip {
+      background-color: #4dc76a !important;
+      color: white !important;
+
+      mat-icon {
+        color: white !important;
+      }
+    }
+  }
+}
+

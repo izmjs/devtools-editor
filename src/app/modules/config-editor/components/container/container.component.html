@@ -1,0 +1,21 @@
+<h3 mat-dialog-title>
+  <i class="material-icons">
+    settings
+  </i>
+  Settings
+</h3>
+<div class="success" *ngIf="saved">
+  <i class="material-icons">
+    done
+  </i>
+  <span>Success.</span>
+  Would you like to <a class="restart-server" (click)="restartServer($event)"> restart </a> the server?
+</div>
+<div mat-dialog-content>
+  <app-config
+    [items]="list"
+    [active]="current"
+    (save)="onSave($event)"
+    (clear)="onClear($event)"
+  ></app-config>
+</div>

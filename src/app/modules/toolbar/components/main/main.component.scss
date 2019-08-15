@@ -1,0 +1,28 @@
+mat-toolbar {
+  color: #424242;
+
+  .toolbar-icons {
+    position: fixed;
+    padding: 0;
+    top: 0;
+    z-index: 9999;
+    padding-right: 100px;
+    background-color: white;
+    border-bottom: 1px solid #dedede73;
+  }
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+sui-select {
+  font-size: 14px;
+  width: 230px;
+}
+
+.toolbar-icons button {
+  color: #424242;
+  background-color: #eee;
+  margin-left: 13px;
+}

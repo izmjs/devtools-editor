@@ -1,0 +1,45 @@
+<div class="content">
+  <div class="menu">
+    <h5>
+      Dependencies
+    </h5>
+    <div class="menus">
+      <a
+        class="item"
+        *ngFor="let t of types"
+        (click)="onTabChanged(t)"
+        [ngClass]="{active:current===t.type}">
+        {{t.title}}
+      </a>
+    </div>
+    <div class="ui search">
+      <div class="ui mini icon input">
+        <input class="prompt" type="text" [(ngModel)]="text" placeholder="Search..." (keyup.enter)="onSearch(text)">
+        <i class="search icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="segment">
+    <div *ngIf="loading" class="ui active centered inline loader"></div>
+    <div *ngIf="!loading">
+      <mat-chip-list>
+        <mat-chip *ngFor="let item of installed" [selectable]="false" [removable]="true" [disabled]="item.removed">
+          {{ item.name }}
+          <mat-icon matChipRemove (click)="onRemove(item)">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+      <div class="ui four cards">
+        <div class="card" *ngFor="let item of items">
+          <div class="content">
+            <app-dependency-item
+              [item]="item"
+              [type]="'fm'"
+              (install)="onInstall($event)"
+              (remove)="onRemove($event)">
+            </app-dependency-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

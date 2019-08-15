@@ -1,0 +1,106 @@
+<div class="main" [ngStyle]="{overflow:working?'hidden':'initial'}">
+  <div *ngIf="working" class="ui indicating progress active" data-percent="100">
+    <div class="bar"></div>
+  </div>
+  <table *ngIf="rows && rows.length > 0" [class]="'ui striped table ' + (working ? 'working': '')">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th *ngFor="let lng of lngs; let i = index" (dblclick)="onLngEdit(lng, i, $event)">
+          {{lng.label}}
+          <span *ngIf="lng.name && lng.name !== lng.label" class="details">
+            ({{lng.name}})
+          </span>
+          <div *ngIf="editableLngs.includes(i)" class="actions">
+            <button class="circular mini ui icon button" (click)="onLngCancel(lng, i)" tabindex="-1" [disabled]="working">
+              <i class="undo icon"></i>
+            </button>
+            <button class="circular mini ui icon button" (click)="onLngSave(lng, i)" tabindex="-1" [disabled]="working">
+              <i class="check icon"></i>
+            </button>
+          </div>
+          <div *ngIf="!editableLngs.includes(i)" class="actions">
+            <button class="circular mini ui icon button" (click)="onLngEdit(lng, i)" tabindex="-1" [disabled]="working">
+              <i class="edit icon"></i>
+            </button>
+            <button class="circular mini ui icon button" (click)="onLngRemove(lng, i)" tabindex="-1" [disabled]="working">
+              <i class="trash icon"></i>
+            </button>
+          </div>
+        </th>
+        <th class="tools">Tools</th>
+      </tr>
+    </thead>
+    <tbody #table>
+      <tr *ngFor="let entry of rows; let i = index" (dblclick)="onEdit(entry, i, $event)">
+        <td *ngIf="!entry.isNew">{{entry.key}}</td>
+        <td *ngIf="entry.isNew" [class]="entry.type">
+          <div class="ui input">
+            <input
+              type="text"
+              (keyup)="onKeyUp($event, entry, i)"
+              [(ngModel)]="entry.key"
+              oninput="this.value = this.value.toUpperCase()"
+              placeholder="Put your key here">
+          </div><br>
+          <span *ngIf="entry.message" class="message">
+            <i *ngIf="entry.icon" [class]="entry.icon + ' icon'"></i>
+            {{ entry.message }}
+          </span>
+        </td>
+        <td *ngFor="let lng of lngs; let lngIndex = index">
+          <div *ngIf="isCellEditable(entry, lng, i)" [class]="entry.data[lng.key].type">
+            <div class="ui input">
+              <input
+                type="text"
+                (keyup)="onKeyUp($event, entry, i, lngIndex)"
+                [(ngModel)]="entry.data[lng.key].current"
+                placeholder="Put your value here">
+            </div><br>
+            <span *ngIf="entry.data[lng.key].message" class="message">
+              <i *ngIf="entry.data[lng.key].icon" [class]="entry.data[lng.key].icon + ' icon'"></i>
+              {{ entry.data[lng.key].message }}
+            </span>
+          </div>
+          <span *ngIf="!isCellEditable(entry, lng, i)">{{entry.data[lng.key]?.current}}</span>
+        </td>
+        <td *ngIf="editableEntries.includes(i) || entry.isNew">
+          <button class="circular mini ui icon button" (click)="onCancel(entry, i)" tabindex="-1" [disabled]="working">
+            <i class="undo icon"></i>
+          </button>
+          <button class="circular mini ui icon button" (click)="onSave(entry, i)" tabindex="-1" [disabled]="working">
+            <i class="check icon"></i>
+          </button>
+        </td>
+        <td *ngIf="!editableEntries.includes(i) && !entry.isNew">
+          <button class="circular mini ui icon button" (click)="onEdit(entry, i)" tabindex="-1" [disabled]="working">
+            <i class="edit icon"></i>
+          </button>
+          <button class="circular mini ui icon button" (click)="onRemove(entry, i)" tabindex="-1" [disabled]="working">
+            <i class="trash icon"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!working" style="margin-bottom: 60px;float: left;">
+    <div class="ui right floated buttons" *ngIf="!isAddLanguage">
+      <button class="ui yellow button" (click)="isAddLanguage=true" [disabled]="working">Add language</button>
+      <div class="or"></div>
+      <button class="ui grey button" (click)="onAddSentence()" [disabled]="working">Add sentence</button>
+    </div>
+    <div class="ui right floated buttons add-language" *ngIf="isAddLanguage">
+      <sui-select class="selection"
+        [optionFormatter]="formatter"
+        #select>
+        <sui-select-option *ngFor="let option of availableLanguages()" [value]="option"></sui-select-option>
+      </sui-select>
+      <button class="circular mini ui icon button" (click)="isAddLanguage=false" tabindex="-1" [disabled]="working">
+        <i class="undo icon"></i>
+      </button>
+      <button class="circular mini ui icon button" (click)="onAddLanguage(select.selectedOption)" tabindex="-1" [disabled]="working">
+        <i class="check icon"></i>
+      </button>
+    </div>
+  </div>
+</div>

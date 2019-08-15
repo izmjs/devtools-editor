@@ -1,0 +1,58 @@
+@import 'styles-variables';
+
+@import '../node_modules/bootstrap/scss/bootstrap-reboot';
+@import '../node_modules/bootstrap/scss/bootstrap-grid';
+
+// semantic UI components
+// @import '../node_modules/semantic-ui-css/semantic.min.css';
+@import '../node_modules/semantic-ui-css/components/site.min.css';
+@import '../node_modules/semantic-ui-css/components/input.min.css';
+@import '../node_modules/semantic-ui-css/components/menu.min.css';
+@import '../node_modules/semantic-ui-css/components/transition.min.css';
+@import '../node_modules/semantic-ui-css/components/dropdown.min.css';
+@import '../node_modules/semantic-ui-css/components/progress.min.css';
+@import '../node_modules/semantic-ui-css/components/button.min.css';
+@import '../node_modules/semantic-ui-css/components/table.min.css';
+@import '../node_modules/semantic-ui-css/components/icon.min.css';
+@import '../node_modules/semantic-ui-css/components/popup.min.css';
+
+@import 'styles-reset';
+
+@import '../node_modules/@angular/material/theming';
+
+@include mat-core();
+
+@import 'themes/default-theme.scss';
+@import 'themes/light-theme.scss';
+@import 'themes/black-theme.scss';
+@import 'themes/nature-theme.scss';
+
+@import 'styles-reset.scss-theme';
+@import 'app/app.component.scss-theme';
+@import 'app/shared/big-input/big-input.component.scss-theme';
+
+@mixin custom-components-theme($theme) {
+  @include app-styles-reset-theme($theme);
+  @include app-app-component-theme($theme);
+  @include app-big-input-component-theme($theme);
+}
+
+.default-theme {
+  @include angular-material-theme($app-theme);
+  @include custom-components-theme($app-theme);
+}
+
+.light-theme {
+  @include angular-material-theme($app-light-theme);
+  @include custom-components-theme($app-light-theme);
+}
+
+.black-theme {
+  @include angular-material-theme($app-black-theme);
+  @include custom-components-theme($app-black-theme);
+}
+
+.nature-theme {
+  @include angular-material-theme($app-nature-theme);
+  @include custom-components-theme($app-nature-theme);
+}

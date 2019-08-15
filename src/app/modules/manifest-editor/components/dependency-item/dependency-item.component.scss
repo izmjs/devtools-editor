@@ -1,0 +1,32 @@
+span.actions {
+  position: absolute;
+  bottom: 5px;
+  right: 3px;
+}
+
+div.header {
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+div.description {
+  p {
+    font-size: 11px;
+  }
+
+  i.icon {
+    font-size: 11px;
+  }
+
+  i.icon.check {
+    &:hover {
+      background-color: #a0a0a0!important;
+
+      &::before {
+        content: "\f1f8";
+      }
+    }
+  }
+}

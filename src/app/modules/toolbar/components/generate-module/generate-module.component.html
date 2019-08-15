@@ -1,0 +1,14 @@
+<h3 mat-dialog-title>New module</h3>
+<mat-dialog-content>
+  <mat-form-field>
+    <input appLowercase placeholder="Module name" matInput (keyup)="onInput($event)" [(ngModel)]="data.name" autofocus>
+  </mat-form-field>
+  <mat-checkbox [(ngModel)]="data.git">Initialize git repository</mat-checkbox>
+  <mat-checkbox [(ngModel)]="data.install">Install dependencies</mat-checkbox>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onCreate()" [disabled]="!data.name">
+    Create {{ data.install ? '& install dependencies': '' }}
+  </button>
+</mat-dialog-actions>
