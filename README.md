@@ -29,7 +29,6 @@ npm start
   * `npm run analyze` - runs full prod build and `webpack-bundle-analyzer` to visualize how much code is shipped (dependencies & application) 
   * `npm run compodoc` - runs [Compodoc](https://compodoc.app) to generate a static documentation of the application 
 
-![analzye](https://raw.githubusercontent.com/tomastrajan/devtoolsnalyze.png)
 
 ## Run Inside Docker Container
   * `docker build -t material-starter .` - builds docker image with name `material-starter`
