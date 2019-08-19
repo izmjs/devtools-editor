@@ -8,6 +8,7 @@ import { State, ToolbarState } from '../../toolbar.model';
 import { ToolbarService } from '../../toolbar.service';
 import { ToolbarComponent } from './main.component';
 import { Store } from '@ngrx/store';
+import { SocketIoModule } from 'ngx-socket-io';
 
 function createState(toolbarState: ToolbarState): State {
   return {
@@ -23,7 +24,12 @@ describe('ToolbarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ToolbarComponent],
-      imports: [CoreModule, TestingModule, SuiSelectModule],
+      imports: [
+        CoreModule,
+        TestingModule,
+        SuiSelectModule,
+        SocketIoModule.forRoot({ options: {}, url: '' })
+      ],
       providers: [ToolbarService]
     }).compileComponents();
   }));

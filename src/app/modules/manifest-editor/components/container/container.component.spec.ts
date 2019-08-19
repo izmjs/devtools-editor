@@ -8,10 +8,22 @@ import { SharedModule } from '@app/shared';
 import { State, IManifestEditorState } from '../../manifest-editor.model';
 import { ManifestEditorService } from '../../manifest-editor.service';
 import { ContainerComponent } from './container.component';
+import { initialState } from '../../manifest-editor.reducer';
+import { MetaComponent } from '../meta/meta.component';
+import { DependenciesComponent } from '../dependencies/dependencies.component';
+import { DependencyItemComponent } from '../dependency-item/dependency-item.component';
 
 function createState(state: IManifestEditorState): State {
   return {
-    'manifest-editor': state
+    'manifest-editor': state,
+    toolbar: {
+      namespaces: {
+        current: null,
+        list: [],
+        error: null,
+        loading: false
+      }
+    }
   } as State;
 }
 
@@ -22,7 +34,12 @@ describe('ContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ContainerComponent],
+      declarations: [
+        MetaComponent,
+        ContainerComponent,
+        DependenciesComponent,
+        DependencyItemComponent
+      ],
       imports: [CoreModule, TestingModule, SharedModule],
       providers: [ManifestEditorService]
     }).compileComponents();
@@ -30,11 +47,7 @@ describe('ContainerComponent', () => {
 
   beforeEach(() => {
     store = TestBed.get(Store);
-    store.setState(
-      createState({
-        loading: false
-      })
-    );
+    store.setState(createState(initialState));
 
     fixture = TestBed.createComponent(ContainerComponent);
     component = fixture.componentInstance;

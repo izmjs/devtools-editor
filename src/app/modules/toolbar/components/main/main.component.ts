@@ -58,7 +58,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.tasks
       .getMessage()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(console.log);
+      .subscribe();
   }
 
   onNameSpaceChange(ns: INamespace) {

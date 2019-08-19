@@ -16,10 +16,14 @@ import { DependencyItemComponent } from './components/dependency-item/dependency
 import { DependenciesComponent } from './components/dependencies/dependencies.component';
 
 @NgModule({
-  declarations: [ContainerComponent, MetaComponent, DependencyItemComponent, DependenciesComponent],
+  declarations: [
+    ContainerComponent,
+    MetaComponent,
+    DependencyItemComponent,
+    DependenciesComponent
+  ],
   imports: [
     FormsModule,
-    CommonModule,
     CommonModule,
     SharedModule,
     ManifestEditorRoutingModule,

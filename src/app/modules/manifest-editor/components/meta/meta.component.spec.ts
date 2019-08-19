@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetaComponent } from './meta.component';
+import { FormsModule } from '@angular/forms';
 
 describe('MetaComponent', () => {
   let component: MetaComponent;
@@ -8,9 +9,9 @@ describe('MetaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MetaComponent ]
-    })
-    .compileComponents();
+      declarations: [MetaComponent],
+      imports: [FormsModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
