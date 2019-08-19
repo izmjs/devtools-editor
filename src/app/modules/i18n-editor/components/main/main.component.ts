@@ -33,7 +33,7 @@ export class I18nComponent implements OnChanges {
   @Output() removeLanguage: EventEmitter<ILanguage> = new EventEmitter();
   @Output() updateLanguage: EventEmitter<ITranslation> = new EventEmitter();
 
-  @ViewChild('table') private table: ElementRef;
+  @ViewChild('table', { static: false }) private table: ElementRef;
 
   editableEntries: number[] = [];
   editableLngs: number[] = [];
