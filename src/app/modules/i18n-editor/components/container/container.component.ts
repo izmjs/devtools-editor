@@ -49,7 +49,9 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
       .subscribe(state => {
         this.sentences = state.entries;
         this.languages = state.lngs;
-        this.comp.working = state.loading;
+        if (this.comp) {
+          this.comp.working = state.loading;
+        }
       });
 
     this.store

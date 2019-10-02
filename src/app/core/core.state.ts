@@ -4,7 +4,6 @@ import {
   createFeatureSelector
 } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { storeFreeze } from 'ngrx-store-freeze';
 
 import { environment } from '@env/environment';
 
@@ -23,7 +22,6 @@ export const metaReducers: MetaReducer<AppState>[] = [
   initStateFromLocalStorage
 ];
 if (!environment.production) {
-  metaReducers.unshift(storeFreeze);
   if (!environment.test) {
     metaReducers.unshift(debug);
   }
