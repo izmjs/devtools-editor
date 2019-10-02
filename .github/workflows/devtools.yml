@@ -17,10 +17,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: Build the project
       run: |
         npm install
-        npm run npm run build:devtools
+        npm run build:devtools
       env:
         CI: true
     - uses: actions/upload-artifact@master
