@@ -17,8 +17,8 @@ export class MetaComponent {
   logo = '';
   defaultLogo = require('../../../../../assets/module.png');
 
-  @ViewChild('logoInput') logoEl: { nativeElement: HTMLInputElement };
-  @ViewChild('form') form: NgForm;
+  @ViewChild('logoInput', { static: false }) logoEl: { nativeElement: HTMLInputElement };
+  @ViewChild('form', { static: false }) form: NgForm;
 
   @Output() save: EventEmitter<IMetadata> = new EventEmitter();
   @Input() metadata: IMetadata = {

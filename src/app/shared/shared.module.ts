@@ -31,8 +31,7 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
   faCog,
   faBars,
@@ -65,37 +64,6 @@ import {
   faInstagram,
   faYoutube
 } from '@fortawesome/free-brands-svg-icons';
-
-library.add(
-  faCog,
-  faBars,
-  faBook,
-  faPlus,
-  faEdit,
-  faTrash,
-  faTimes,
-  faFilter,
-  faTasks,
-  faCheck,
-  faSquare,
-  faStream,
-  faRocket,
-  faGithub,
-  faTwitter,
-  faMediumM,
-  faCaretUp,
-  faYoutube,
-  faLanguage,
-  faPowerOff,
-  faCaretDown,
-  faLightbulb,
-  faInstagram,
-  faPaintBrush,
-  faUserCircle,
-  faPlayCircle,
-  faWindowMaximize,
-  faExclamationTriangle,
-);
 
 import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
@@ -192,4 +160,37 @@ import { TruncatePipe } from './truncate.pipe';
     BigInputActionComponent,
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(
+      faCog,
+      faBars,
+      faBook,
+      faPlus,
+      faEdit,
+      faTrash,
+      faTimes,
+      faFilter,
+      faTasks,
+      faCheck,
+      faSquare,
+      faStream,
+      faRocket,
+      faGithub,
+      faTwitter,
+      faMediumM,
+      faCaretUp,
+      faYoutube,
+      faLanguage,
+      faPowerOff,
+      faCaretDown,
+      faLightbulb,
+      faInstagram,
+      faPaintBrush,
+      faUserCircle,
+      faPlayCircle,
+      faWindowMaximize,
+      faExclamationTriangle,
+    );
+  }
+}

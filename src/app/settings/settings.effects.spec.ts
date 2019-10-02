@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TranslateService } from '@ngx-translate/core';
 import { Actions, getEffectsMetadata } from '@ngrx/effects';
@@ -8,13 +7,12 @@ import { of } from 'rxjs';
 
 import {
   AnimationsService,
-  AppState,
   LocalStorageService,
   TitleService
 } from '@app/core';
 
 import { SettingsEffects, SETTINGS_KEY } from './settings.effects';
-import { SettingsState } from './settings.model';
+import { SettingsState, State } from './settings.model';
 import { ActionSettingsChangeTheme, SettingsActions } from './settings.actions';
 
 describe('SettingsEffects', () => {
@@ -24,7 +22,7 @@ describe('SettingsEffects', () => {
   let titleService: jasmine.SpyObj<TitleService>;
   let animationsService: jasmine.SpyObj<AnimationsService>;
   let translateService: jasmine.SpyObj<TranslateService>;
-  let store: jasmine.SpyObj<Store<AppState>>;
+  let store: jasmine.SpyObj<Store<State>>;
 
   beforeEach(() => {
     router = {
@@ -64,7 +62,7 @@ describe('SettingsEffects', () => {
       );
       const metadata = getEffectsMetadata(effect);
 
-      expect(metadata.persistSettings).toEqual({ dispatch: false });
+      expect(metadata.persistSettings).toEqual({ dispatch: false, resubscribeOnError: true });
     });
   });
 

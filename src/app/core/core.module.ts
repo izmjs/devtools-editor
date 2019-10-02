@@ -32,7 +32,15 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
     HttpClientModule,
 
     // ngrx
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        // strictActionSerializability: true,
+      },
+    }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([AuthEffects, GoogleAnalyticsEffects]),
     environment.production
