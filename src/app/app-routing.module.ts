@@ -16,27 +16,38 @@ const routes: Routes = [
   },
   {
     path: 'i18n-editor',
-    loadChildren: 'app/modules/i18n-editor/i18n-editor.module#I18nEditorModule'
+    loadChildren: () =>
+      import('./modules/i18n-editor/i18n-editor.module').then(
+        m => m.I18nEditorModule
+      )
   },
   {
     path: 'route-designer',
-    loadChildren:
-      'app/modules/route-designer/route-designer.module#RouteDesignerModule'
+    loadChildren: () =>
+      import('./modules/route-designer/route-designer.module').then(
+        m => m.RouteDesignerModule
+      )
   },
   {
     path: 'model-designer',
-    loadChildren:
-      'app/modules/model-designer/model-designer.module#ModelDesignerModule'
+    loadChildren: () =>
+      import('./modules/model-designer/model-designer.module').then(
+        m => m.ModelDesignerModule
+      )
   },
   {
     path: 'api-designer',
-    loadChildren:
-      'app/modules/api-designer/api-designer.module#ApiDesignerModule'
+    loadChildren: () =>
+      import('./modules/api-designer/api-designer.module').then(
+        m => m.ApiDesignerModule
+      )
   },
   {
     path: 'manifest-editor',
-    loadChildren:
-      'app/modules/manifest-editor/manifest-editor.module#ManifestEditorModule'
+    loadChildren: () =>
+      import('./modules/manifest-editor/manifest-editor.module').then(
+        m => m.ManifestEditorModule
+      )
   },
   {
     path: '**',
