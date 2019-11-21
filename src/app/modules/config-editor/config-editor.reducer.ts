@@ -1,8 +1,9 @@
 import { IConfigEditorState } from './config-editor.model';
 import {
-  ConfigEditorActions,
-  ConfigEditorActionTypes
+  actionFetchConfigError,
+  actionFetchConfigSuccess,
 } from './config-editor.actions';
+import { on, createReducer, Action } from '@ngrx/store';
 
 export const initialState: IConfigEditorState = {
   loading: false,
@@ -10,33 +11,31 @@ export const initialState: IConfigEditorState = {
   config: []
 };
 
+const reducer = createReducer(
+  initialState,
+  on(
+    actionFetchConfigSuccess,
+    (state, action) => ({
+      ...state,
+      loading: true,
+      error: null,
+      config: action.payload,
+    }),
+  ),
+  on(
+    actionFetchConfigError,
+    (state, action) => ({
+      ...state,
+      loading: true,
+      error: action.payload,
+      config: [],
+    }),
+  ),
+)
+
 export function ConfigEditorReducer(
-  state: IConfigEditorState = initialState,
-  action: ConfigEditorActions
-): IConfigEditorState {
-  switch (action.type) {
-    case ConfigEditorActionTypes.ACTION_FETCH_CONFIG:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-        config: []
-      };
-    case ConfigEditorActionTypes.ACTION_FETCH_CONFIG_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        config: action.payload
-      };
-    case ConfigEditorActionTypes.ACTION_FETCH_CONFIG_ERROR:
-      return {
-        ...state,
-        loading: true,
-        error: action.payload,
-        config: []
-      };
-    default:
-      return state;
-  }
+  state: IConfigEditorState,
+  action: Action
+) {
+  return reducer(state, action);
 }

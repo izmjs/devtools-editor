@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import {
@@ -6,73 +6,48 @@ import {
   IKeyValue
 } from '@app/modules/config-editor/config-editor.model';
 
-export enum ConfigEditorActionTypes {
-  ACTION_FETCH_CONFIG = '[config-editor] Fetch configuration',
-  ACTION_FETCH_CONFIG_SUCCESS = '[config-editor] Configuration fetched successfuly',
-  ACTION_FETCH_CONFIG_ERROR = '[config-editor] Error while fetching configuration',
-  ACTION_EDIT_SETTINGS_ITEM = '[config-editor] Edit a setting item',
-  ACTION_EDIT_SETTINGS_ITEM_SUCCESS = '[config-editor] Item edited successfuly',
-  ACTION_EDIT_SETTINGS_ITEM_ERROR = '[config-editor] Error while editing an item',
-  ACTION_CLEAR_SETTINGS_ITEM = '[config-editor] Clear a setting item',
-  ACTION_CLEAR_SETTINGS_ITEM_SUCCESS = '[config-editor] Item cleared successfuly',
-  ACTION_CLEAR_SETTINGS_ITEM_ERROR = '[config-editor] Error while clearing an item',
-  EDIT_SETTINGS = '[manifest-editor] Start editing settings'
-}
+export const actionEditItem = createAction(
+  '[config-editor] Edit a setting item',
+  props<{payload: IKeyValue[]}>(),
+);
 
-export class ActionEditItem implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_EDIT_SETTINGS_ITEM;
-  constructor(readonly payload: IKeyValue[]) {}
-}
+export const actionEditItemSuccess = createAction(
+  '[config-editor] Item edited successfuly',
+);
 
-export class ActionEditItemSuccess implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_EDIT_SETTINGS_ITEM_SUCCESS;
-}
+export const actionEditItemError = createAction(
+  '[config-editor] Error while editing an item',
+  props<{payload: HttpErrorResponse}>(),
+);
 
-export class ActionEditItemError implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_EDIT_SETTINGS_ITEM_ERROR;
-  constructor(readonly payload: HttpErrorResponse) {}
-}
+export const actionClearItem = createAction(
+  '[config-editor] Clear a setting item',
+  props<{payload: IKeyValue[]}>(),
+);
 
-export class ActionClearItem implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_CLEAR_SETTINGS_ITEM;
-  constructor(readonly payload: IKeyValue[]) {}
-}
+export const actionClearItemSuccess = createAction(
+  '[config-editor] Item cleared successfuly',
+);
 
-export class ActionClearItemSuccess implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_CLEAR_SETTINGS_ITEM_SUCCESS;
-}
+export const actionClearItemError = createAction(
+  '[config-editor] Error while clearing an item',
+  props<{payload: HttpErrorResponse}>(),
+);
 
-export class ActionClearItemError implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_CLEAR_SETTINGS_ITEM_ERROR;
-  constructor(readonly payload: HttpErrorResponse) {}
-}
+export const actionFetchConfig = createAction(
+  '[config-editor] Fetch configuration',
+);
 
-export class ActionFetchConfig implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_FETCH_CONFIG;
-}
+export const actionFetchConfigSuccess = createAction(
+  '[config-editor] Configuration fetched successfuly',
+  props<{payload: IConfig[]}>(),
+);
 
-export class ActionFetchConfigSuccess implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_FETCH_CONFIG_SUCCESS;
-  constructor(readonly payload: IConfig[]) {}
-}
+export const actionFetchConfigError = createAction(
+  '[config-editor] Error while fetching configuration',
+  props<{payload: HttpErrorResponse}>(),
+);
 
-export class ActionFetchConfigError implements Action {
-  readonly type = ConfigEditorActionTypes.ACTION_FETCH_CONFIG_ERROR;
-  constructor(readonly payload: HttpErrorResponse) {}
-}
-
-export class ActionEditSettings implements Action {
-  readonly type = ConfigEditorActionTypes.EDIT_SETTINGS;
-}
-
-export type ConfigEditorActions =
-  | ActionEditItem
-  | ActionEditItemSuccess
-  | ActionEditItemError
-  | ActionClearItem
-  | ActionClearItemSuccess
-  | ActionClearItemError
-  | ActionFetchConfig
-  | ActionFetchConfigSuccess
-  | ActionFetchConfigError
-  | ActionEditSettings;
+export const actionEditSettings = createAction(
+  '[manifest-editor] Start editing settings'
+);

@@ -8,12 +8,12 @@ import {
   ActionEditProject,
   ActionAddModule
 } from '@modules/toolbar/toolbar.actions';
-import { ActionEditSettings } from '@modules/config-editor/config-editor.actions';
 
 import { INamespace, State } from '../../toolbar.model';
 import { selectNamespaces, selectRestartServer } from '../../toolbar.selectors';
 import { TasksService } from '../../tasks.service';
 import { takeUntil } from 'rxjs/operators';
+import { actionEditSettings } from '@app/modules/config-editor/config-editor.actions';
 
 @Component({
   selector: 'app-toolbar',
@@ -74,7 +74,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   editSettings() {
-    this.store.dispatch(new ActionEditSettings());
+    this.store.dispatch(actionEditSettings());
   }
 
   refreshNS() {

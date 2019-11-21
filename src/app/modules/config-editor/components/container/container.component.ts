@@ -17,10 +17,11 @@ import { MatDialogRef } from '@angular/material';
 
 import { State, IConfig, IItem } from '../../config-editor.model';
 import {
-  ActionFetchConfig,
-  ActionEditItem,
-  ActionClearItem,
-  ConfigEditorActionTypes
+  actionEditItem,
+  actionClearItem,
+  actionFetchConfig,
+  actionEditItemSuccess,
+  actionClearItemSuccess,
 } from '../../config-editor.actions';
 
 @Component({
@@ -47,15 +48,12 @@ export class ContainerComponent implements OnInit, OnDestroy {
     this.actions$
       .pipe(
         ofType(
-          ConfigEditorActionTypes.ACTION_EDIT_SETTINGS_ITEM_SUCCESS,
-          ConfigEditorActionTypes.ACTION_CLEAR_SETTINGS_ITEM_SUCCESS
+          actionEditItemSuccess,
+          actionClearItemSuccess,
         )
       )
       .subscribe(() => {
         this.saved = true;
-        setTimeout(() => {
-          // this.saved = false;
-        }, 10000);
       });
     this.store
       .pipe(
@@ -76,10 +74,11 @@ export class ContainerComponent implements OnInit, OnDestroy {
       .subscribe(s => {
         this.error = s.error;
         this.loading = s.loading;
-        this.list = s.config;
+        // Clone the list
+        this.list = JSON.parse(JSON.stringify(s.config));
       });
 
-    this.store.dispatch(new ActionFetchConfig());
+    this.store.dispatch(actionFetchConfig());
   }
 
   ngOnDestroy() {
@@ -89,13 +88,13 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
   onSave(item: IItem) {
     this.store.dispatch(
-      new ActionEditItem([
-        {
+      actionEditItem({
+        payload: [{
           key: item.key,
           value: item.value,
           scope: item.scope
-        }
-      ])
+        }]
+      })
     );
   }
 
@@ -105,13 +104,13 @@ export class ContainerComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(
-      new ActionClearItem([
-        {
+      actionClearItem({
+        payload: [{
           key: item.key,
           scope: item.scope,
           remove: true
-        }
-      ])
+        }]
+      })
     );
   }
 

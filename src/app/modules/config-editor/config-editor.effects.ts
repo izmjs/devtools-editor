@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
 import { ConfigEditorService } from './config-editor.service';
 import {
-  ActionFetchConfigError,
-  ConfigEditorActionTypes,
-  ActionFetchConfigSuccess,
-  ActionEditItem,
-  ActionEditItemSuccess,
-  ActionEditItemError,
-  ActionClearItem,
-  ActionClearItemSuccess,
-  ActionClearItemError,
-  ActionFetchConfig
+  actionFetchConfig,
+  actionFetchConfigError,
+  actionFetchConfigSuccess,
+  actionEditItemSuccess,
+  actionClearItem,
+  actionClearItemSuccess,
+  actionClearItemError,
+  actionEditItem,
+  actionEditSettings,
+  actionEditItemError
 } from '@app/modules/config-editor/config-editor.actions';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -28,47 +28,52 @@ export class ConfigEditorEffects {
     private dialog: MatDialog,
   ) {}
 
-  @Effect()
-  retrieve = this.actions$.pipe(
-    ofType(ConfigEditorActionTypes.ACTION_FETCH_CONFIG),
-    switchMap(() =>
-      this.service.fetch().pipe(
-        map(data => new ActionFetchConfigSuccess(data)),
-        catchError(error => of(new ActionFetchConfigError(error)))
+  retrieve = createEffect(
+    () => this.actions$.pipe(
+      ofType(actionFetchConfig),
+      switchMap(() =>
+        this.service.fetch().pipe(
+          map(data => actionFetchConfigSuccess({payload: data})),
+          catchError(error => of(actionFetchConfigError({ payload: error })))
+        )
       )
     )
   );
 
-  @Effect()
-  setItems = this.actions$.pipe(
-    ofType(ConfigEditorActionTypes.ACTION_EDIT_SETTINGS_ITEM),
-    switchMap((action: ActionEditItem) =>
-      this.service.set(action.payload).pipe(
-        map(() => new ActionEditItemSuccess()),
-        catchError(error => of(new ActionEditItemError(error)))
+  setItems = createEffect(
+    () => this.actions$.pipe(
+      ofType(actionEditItem),
+      switchMap((action) =>
+        this.service.set(action.payload).pipe(
+          map(() => actionEditItemSuccess()),
+          catchError(error => of(actionEditItemError({payload: error})))
+        )
       )
     )
   );
 
-  @Effect()
-  clearItems = this.actions$.pipe(
-    ofType(ConfigEditorActionTypes.ACTION_CLEAR_SETTINGS_ITEM),
-    switchMap((action: ActionClearItem) =>
-      this.service.set(action.payload).pipe(
-        map(() => new ActionClearItemSuccess()),
-        catchError(error => of(new ActionClearItemError(error)))
+  clearItems = createEffect(
+    () => this.actions$.pipe(
+      ofType(actionClearItem),
+      switchMap((action) =>
+        this.service.set(action.payload).pipe(
+          map(() => actionClearItemSuccess()),
+          catchError(error => of(actionClearItemError({payload: error})))
+        )
       )
     )
   );
 
-  @Effect({ dispatch: false })
-  editSettings = this.actions$.pipe(
-    ofType(ConfigEditorActionTypes.EDIT_SETTINGS),
-    tap(() =>
-      this.dialog.open(ContainerComponent, {
-        width: '60%',
-        height: '500px'
-      })
-    )
+  editSettings = createEffect(
+    () => this.actions$.pipe(
+      ofType(actionEditSettings),
+      tap(() =>
+        this.dialog.open(ContainerComponent, {
+          width: '60%',
+          height: '500px'
+        })
+      )
+    ),
+    { dispatch: false }
   );
 }
