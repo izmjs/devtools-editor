@@ -37,9 +37,8 @@ import { GoogleAnalyticsEffects } from './google-analytics/google-analytics.effe
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
-        strictStateSerializability: true,
-        // strictActionSerializability: true,
-      },
+        strictStateSerializability: true
+      }
     }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([AuthEffects, GoogleAnalyticsEffects]),

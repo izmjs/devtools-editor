@@ -16,7 +16,17 @@ describe('AuthGuardService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({})],
+      imports: [
+        StoreModule.forRoot(
+          {},
+          {
+            runtimeChecks: {
+              strictStateImmutability: true,
+              strictActionImmutability: true
+            }
+          }
+        )
+      ],
       providers: [AuthGuardService, provideMockStore()]
     });
     authGuardService = TestBed.get(AuthGuardService);
