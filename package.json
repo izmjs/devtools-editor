@@ -134,7 +134,7 @@
     "protractor": "^5.4.2",
     "puppeteer": "^2.0.0",
     "rimraf": "^3.0.0",
-    "schematics-rx-module": "^0.1.15",
+    "schematics-rx-module": "^0.1.16",
     "standard-version": "^7.0.1",
     "ts-node": "^8.5.2",
     "tslint": "^5.20.1",
