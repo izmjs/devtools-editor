@@ -42,6 +42,7 @@
   },
   "husky": {
     "hooks": {
+      "post-merge": "npm i --unsafe-perm",
       "pre-commit": "lint-staged && npm test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
@@ -74,11 +75,11 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@ngrx/effects": "^8.5.1",
-    "@ngrx/entity": "^8.5.1",
-    "@ngrx/router-store": "^8.5.1",
-    "@ngrx/store": "^8.5.1",
-    "@ngrx/store-devtools": "^8.5.1",
+    "@ngrx/effects": "^8.5.2",
+    "@ngrx/entity": "^8.5.2",
+    "@ngrx/router-store": "^8.5.2",
+    "@ngrx/store": "^8.5.2",
+    "@ngrx/store-devtools": "^8.5.2",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@storybook/addon-knobs": "^5.2.6",
@@ -122,7 +123,7 @@
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.4.1",
     "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "^2.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "~1.4.2",
     "karma-spec-reporter": "~0.0.32",

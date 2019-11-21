@@ -12,6 +12,7 @@ import { ContainerComponent } from './container.component';
 import { FieldComponent } from '../field/field.component';
 import { AsTitlePipe } from '../../pipes/as-title.pipe';
 import { MainComponent } from '../main/main.component';
+import { RouterModule } from '@angular/router';
 
 function createState(state: IConfigEditorState): State {
   return {
@@ -40,10 +41,7 @@ describe('ContainerComponent', () => {
         FieldComponent,
         ContainerComponent
       ],
-      imports: [
-        CoreModule,
-        SharedModule,
-      ],
+      imports: [RouterModule.forRoot([]), CoreModule, SharedModule],
       providers: [
         provideMockStore({
           initialState: createState({
