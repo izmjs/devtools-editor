@@ -1,4 +1,4 @@
-<app-meta [metadata]="meta$ | async" (save)="onMetadaSave($event)" ></app-meta>
+<app-meta [metadata]="meta" (save)="onMetadaSave($event)" ></app-meta>
 <app-dependencies
   [installed]="installed$ | async"
   [items]="list$ | async"

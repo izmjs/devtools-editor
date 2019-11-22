@@ -3,8 +3,29 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action, Store, select } from '@ngrx/store';
 
 import { ManifestEditorService } from './manifest-editor.service';
-import { ManifestEditorActionTypes, ActionLoadMetadata, ActionLoadMetadataSuccess, ActionLoadMetadataError, ActionSaveMetadata, ActionListInstalled, ActionListInstalledSuccess, ActionListInstalledError, ActionSearchModule, ActionSearchModuleSuccess, ActionSearchModuleError, ActionInstallModule, ActionInstallModuleSuccess, ActionInstallModuleError } from './manifest-editor.actions';
-import { withLatestFrom, filter, switchMap, map, catchError, tap } from 'rxjs/operators';
+import {
+  actionLoadMetadata,
+  actionLoadMetadataSuccess,
+  actionLoadMetadataError,
+  actionSaveMetadata,
+  actionListInstalled,
+  actionListInstalledSuccess,
+  actionListInstalledError,
+  actionSearchModule,
+  actionSearchModuleSuccess,
+  actionSearchModuleError,
+  actionInstallModule,
+  actionInstallModuleSuccess,
+  actionInstallModuleError
+} from './manifest-editor.actions';
+import {
+  withLatestFrom,
+  filter,
+  switchMap,
+  map,
+  catchError,
+  tap
+} from 'rxjs/operators';
 import { State } from './manifest-editor.model';
 import { selectCurrentNamespace } from '@modules/toolbar/toolbar.selectors';
 import { INamespace } from '@modules/toolbar/toolbar.model';
@@ -18,67 +39,68 @@ export class ManifestEditorEffects {
     private service: ManifestEditorService
   ) {}
 
-  meta = createEffect(
-    () => this.actions$.pipe(
-      ofType(ManifestEditorActionTypes.ACTION_LOAD_METADATA),
+  meta = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionLoadMetadata),
       withLatestFrom(this.store.pipe(select(selectCurrentNamespace))),
       filter(([action, ns]) => ns && !!ns.key),
-      switchMap(([action, ns]: [ActionLoadMetadata, INamespace]) =>
+      switchMap(([action, ns]: [any, INamespace]) =>
         this.service.meta(ns.key).pipe(
-          map(data => new ActionLoadMetadataSuccess(data)),
-          catchError(error => of(new ActionLoadMetadataError(error)))
+          map(data => actionLoadMetadataSuccess({ payload: data })),
+          catchError(error => of(actionLoadMetadataError({ payload: error })))
         )
       )
     )
   );
 
   saveMeta = createEffect(
-    () => this.actions$.pipe(
-      ofType(ManifestEditorActionTypes.ACTION_SAVE_METADATA),
-      withLatestFrom(this.store.pipe(select(selectCurrentNamespace))),
-      filter(([action, ns]) => ns && !!ns.key),
-      tap(([action, ns]: [ActionSaveMetadata, INamespace]) => {
-        this.service.saveMeta(action.payload, ns.key).subscribe();
-      })
-    ),
+    () =>
+      this.actions$.pipe(
+        ofType(actionSaveMetadata),
+        withLatestFrom(this.store.pipe(select(selectCurrentNamespace))),
+        filter(([action, ns]) => ns && !!ns.key),
+        tap(([action, ns]: [any, INamespace]) => {
+          this.service.saveMeta(action.payload, ns.key).subscribe();
+        })
+      ),
     { dispatch: false }
   );
 
-  getInstalled = createEffect(
-    () => this.actions$.pipe(
-      ofType(ManifestEditorActionTypes.ACTION_LIST_INSTALLED),
+  getInstalled = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionListInstalled),
       withLatestFrom(this.store.pipe(select(selectCurrentNamespace))),
       filter(([action, ns]) => ns && !!ns.key),
-      switchMap(([action, ns]: [ActionListInstalled, INamespace]) =>
+      switchMap(([action, ns]: [any, INamespace]) =>
         this.service.installed(action.payload, ns.key).pipe(
-          map(data => new ActionListInstalledSuccess(data)),
-          catchError(error => of(new ActionListInstalledError(error)))
+          map(data => actionListInstalledSuccess({ payload: data })),
+          catchError(error => of(actionListInstalledError({ payload: error })))
         )
       )
     )
   );
 
-  searchModule = createEffect(
-    () => this.actions$.pipe(
-      ofType(ManifestEditorActionTypes.ACTION_SEACH_MODULE),
-      switchMap((action: ActionSearchModule) =>
+  searchModule = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionSearchModule),
+      switchMap((action: any) =>
         this.service.search(action.payload, {}).pipe(
-          map(data => new ActionSearchModuleSuccess(data)),
-          catchError(error => of(new ActionSearchModuleError(error)))
+          map(data => actionSearchModuleSuccess({ payload: data })),
+          catchError(error => of(actionSearchModuleError({ payload: error })))
         )
       )
     )
   );
 
-  installModule = createEffect(
-    () => this.actions$.pipe(
-      ofType(ManifestEditorActionTypes.ACTION_INSTALL_MODULE),
+  installModule = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionInstallModule),
       withLatestFrom(this.store.pipe(select(selectCurrentNamespace))),
       filter(([action, ns]) => ns && !!ns.key),
-      switchMap(([action, ns]: [ActionInstallModule, INamespace]) =>
+      switchMap(([action, ns]: [any, INamespace]) =>
         this.service.install(action.payload, ns.key).pipe(
-          map(() => new ActionInstallModuleSuccess()),
-          catchError(error => of(new ActionInstallModuleError(error)))
+          map(() => actionInstallModuleSuccess()),
+          catchError(error => of(actionInstallModuleError({ payload: error })))
         )
       )
     )
