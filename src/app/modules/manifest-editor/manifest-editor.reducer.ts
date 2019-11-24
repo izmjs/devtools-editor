@@ -1,12 +1,23 @@
 import { IManifestEditorState } from './manifest-editor.model';
-import { ManifestEditorActions, ManifestEditorActionTypes } from './manifest-editor.actions';
+import {
+  actionLoadMetadata,
+  actionLoadMetadataSuccess,
+  actionLoadMetadataError,
+  actionListInstalled,
+  actionListInstalledSuccess,
+  actionListInstalledError,
+  actionSearchModule,
+  actionSearchModuleSuccess,
+  actionSearchModuleError
+} from './manifest-editor.actions';
+import { createReducer, Action, on } from '@ngrx/store';
 
 const INITIAL_VALUE = {
   links: {},
   author: {},
   publisher: {},
   maintainers: [],
-  keywords: [],
+  keywords: []
 };
 
 export const initialState: IManifestEditorState = {
@@ -15,110 +26,102 @@ export const initialState: IManifestEditorState = {
     installed: [],
     error: null,
     list: [],
-    loading: false,
+    loading: false
   },
   meta: {
     data: INITIAL_VALUE,
     error: null,
-    loading: false,
+    loading: false
   }
 };
 
+const reducer = createReducer(
+  initialState,
+  on(actionLoadMetadata, state => ({
+    ...state,
+    meta: {
+      ...state.meta,
+      loading: true,
+      error: null
+    }
+  })),
+  on(actionLoadMetadataSuccess, (state, action) => ({
+    ...state,
+    meta: {
+      ...state.meta,
+      data: {
+        ...INITIAL_VALUE,
+        ...action.payload
+      },
+      loading: false,
+      error: null
+    }
+  })),
+  on(actionLoadMetadataError, (state, action) => ({
+    ...state,
+    meta: {
+      ...state.meta,
+      data: null,
+      loading: true,
+      error: action.payload
+    }
+  })),
+  on(actionListInstalled, state => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: true,
+      installed: [],
+      error: null
+    }
+  })),
+  on(actionListInstalledSuccess, (state, action) => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: false,
+      installed: action.payload,
+      error: null
+    }
+  })),
+  on(actionListInstalledError, (state, action) => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: false,
+      error: action.payload
+    }
+  })),
+  on(actionSearchModule, state => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: true,
+      error: null
+    }
+  })),
+  on(actionSearchModuleSuccess, (state, action) => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: false,
+      list: action.payload,
+      error: null
+    }
+  })),
+  on(actionSearchModuleError, (state, action) => ({
+    ...state,
+    dependencies: {
+      ...state.dependencies,
+      loading: false,
+      error: action.payload
+    }
+  }))
+);
+
 export function ManifestEditorReducer(
-  state: IManifestEditorState = initialState,
-  action: ManifestEditorActions
-): IManifestEditorState {
-  switch (action.type) {
-    case ManifestEditorActionTypes.ACTION_LOAD_METADATA:
-      return {
-        ...state,
-        meta: {
-          ...state.meta,
-          loading: true,
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_LOAD_METADATA_SUCCESS:
-      return {
-        ...state,
-        meta: {
-          ...state.meta,
-          data: {
-            ...INITIAL_VALUE,
-            ...action.payload,
-          },
-          loading: false,
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_LOAD_METADATA_ERROR:
-      return {
-        ...state,
-        meta: {
-          ...state.meta,
-          data: null,
-          loading: true,
-          error: action.payload,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_LIST_INSTALLED:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: true,
-          installed: [],
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_LIST_INSTALLED_SUCCESS:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: false,
-          installed: action.payload,
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_LIST_INSTALLED_ERROR:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: false,
-          error: action.payload,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_SEACH_MODULE:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: true,
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_SEACH_MODULE_SUCCESS:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: false,
-          list: action.payload,
-          error: null,
-        }
-      }
-    case ManifestEditorActionTypes.ACTION_SEACH_MODULE_ERROR:
-      return {
-        ...state,
-        dependencies: {
-          ...state.dependencies,
-          loading: false,
-          error: action.payload,
-        }
-      }
-    default:
-      return state;
-  }
+  state: IManifestEditorState,
+  action: Action
+) {
+  return reducer(state, action);
 }

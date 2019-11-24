@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockStore, TestingModule } from '@testing/utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 
 import { CoreModule } from '@app/core';
@@ -8,10 +9,10 @@ import { SharedModule } from '@app/shared';
 import { State, IConfigEditorState } from '../../config-editor.model';
 import { ConfigEditorService } from '../../config-editor.service';
 import { ContainerComponent } from './container.component';
-import { MainComponent } from '../main/main.component';
 import { FieldComponent } from '../field/field.component';
 import { AsTitlePipe } from '../../pipes/as-title.pipe';
-import { MatDialogRef } from '@angular/material';
+import { MainComponent } from '../main/main.component';
+import { RouterModule } from '@angular/router';
 
 function createState(state: IConfigEditorState): State {
   return {
@@ -40,8 +41,15 @@ describe('ContainerComponent', () => {
         FieldComponent,
         ContainerComponent
       ],
-      imports: [CoreModule, TestingModule, SharedModule],
+      imports: [RouterModule.forRoot([]), CoreModule, SharedModule],
       providers: [
+        provideMockStore({
+          initialState: createState({
+            loading: false,
+            error: null,
+            config: []
+          })
+        }),
         ConfigEditorService,
         {
           provide: MatDialogRef,
@@ -53,13 +61,6 @@ describe('ContainerComponent', () => {
 
   beforeEach(() => {
     store = TestBed.get(Store);
-    store.setState(
-      createState({
-        loading: false,
-        error: null,
-        config: []
-      })
-    );
 
     fixture = TestBed.createComponent(ContainerComponent);
     component = fixture.componentInstance;

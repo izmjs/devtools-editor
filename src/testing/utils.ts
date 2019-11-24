@@ -44,7 +44,15 @@ export function provideMockStore() {
     RouterTestingModule,
     SharedModule,
     TranslateModule.forRoot(),
-    StoreModule.forRoot({})
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true
+        }
+      }
+    )
   ],
   exports: [
     NoopAnimationsModule,

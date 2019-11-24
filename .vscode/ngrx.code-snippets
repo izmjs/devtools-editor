@@ -1,0 +1,72 @@
+{
+  "[Old way] Insert a side effect": {
+    "scope": "typescript",
+    "prefix": "@effect:v0",
+    "body": [
+      "@Effect()",
+      "${1:effectName} = this.actions$.pipe(",
+      "  ofType(${2:ActionTypes}.${3:ACTION_NAME}),",
+      "  switchMap((action: ${4:ActionName}) =>",
+      "    this.service.${5:funcName}(action.payload).pipe(",
+      "      map((data) => new ${4:ActionName}Success(data)),",
+      "      catchError(error => of(new ${4:ActionName}Error(error)))",
+      "    )",
+      "  )",
+      ");",
+    ],
+    "description": "[old version] Create new side effect"
+  },
+  "[New way] Insert a side effect": {
+    "scope": "typescript",
+    "prefix": "@effect:v1",
+    "body": [
+      "${1:effectName} = createEffect(",
+      "  () => this.actions$.pipe(",
+      "    ofType(${2:actionName}),",
+      "    switchMap((action) =>",
+      "      this.service.${3:funcName}(action.payload).pipe(",
+      "        map((data) => ${2:actionName}Success({ payload: data })),",
+      "        catchError(error => of(${2:actionName}Error({ payload: error })))",
+      "      )",
+      "    )",
+      "  )",
+      ");",
+    ],
+    "description": "[new version] Create new side effect"
+  },
+  "Create new action": {
+    "scope": "typescript",
+    "prefix": "@action",
+    "body": [
+      "export const ${1:actionName} = createAction(",
+      "  '[${2:module-name}] ${3:Describe the action}',${4:",
+      "  props<{ ${5:payload}: ${6:PayloadType} \\}>(),}",
+      ");",
+    ],
+    "description": "Create new action"
+  },
+  "Create a reducer": {
+    "scope": "typescript",
+    "prefix": "@reducer",
+    "body": [
+      "const reducer = createReducer(",
+      "  initialState,",
+      ");",
+      "",
+      "export function ${1:reducerName}(state: ${2:State}, action: Action) {",
+      "  return reducer(state, action);",
+      "};",
+    ],
+    "description": "Create new reducer"
+  },
+  "Create a reducer case": {
+    "scope": "typescript",
+    "prefix": "@on:reducer",
+    "body": [
+      "on(${1:actionType}, (state, action) => ({",
+      "  ...state,$2",
+      "})),",
+    ],
+    "description": "New reducer case"
+  },
+}

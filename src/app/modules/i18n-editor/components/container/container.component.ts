@@ -11,12 +11,12 @@ import {
 import { I18nComponent } from '../main/main.component';
 import { selectI18NState } from '../../i18n.selectors';
 import {
-  ActionI18NRetrieve,
-  ActionI18NRemoveLanguages,
-  ActionI18NRemoveEntries,
-  ActionI18NUpdateEntries,
-  ActionI18NAddLanguage,
-  ActionI18NUpdateEntry
+  actionI18NRetrieve,
+  actionI18NRemoveLanguages,
+  actionI18NRemoveEntries,
+  actionI18NUpdateEntries,
+  actionI18NAddLanguage,
+  actionI18NUpdateEntry
 } from '../../i18n.actions';
 import { selectCurrentNamespace } from '@modules/toolbar/toolbar.selectors';
 import { takeUntil } from 'rxjs/operators';
@@ -42,10 +42,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectI18NState)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectI18NState))
       .subscribe(state => {
         this.sentences = state.entries;
         this.languages = state.lngs;
@@ -55,12 +52,9 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
       });
 
     this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectCurrentNamespace)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectCurrentNamespace))
       .subscribe(() => {
-        this.store.dispatch(new ActionI18NRetrieve());
+        this.store.dispatch(actionI18NRetrieve());
       });
   }
 
@@ -69,7 +63,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
    * @param entry The sentence to remove
    */
   onRemove(entry: ISentence) {
-    this.store.dispatch(new ActionI18NRemoveEntries([entry.key]));
+    this.store.dispatch(actionI18NRemoveEntries({ payload: [entry.key] }));
   }
 
   /**
@@ -77,7 +71,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
    * @param entry The sentence to remove
    */
   onRemoveLanguage(language: ILanguage) {
-    this.store.dispatch(new ActionI18NRemoveLanguages([language.key]));
+    this.store.dispatch(actionI18NRemoveLanguages({ payload: [language.key] }));
   }
 
   /**
@@ -93,7 +87,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
       return obj;
     });
 
-    this.store.dispatch(new ActionI18NUpdateEntries(payload));
+    this.store.dispatch(actionI18NUpdateEntries({ payload }));
   }
 
   /**
@@ -101,7 +95,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
    * @param entry The sentence to remove
    */
   onAddLanguage(lng: ILanguage) {
-    this.store.dispatch(new ActionI18NAddLanguage(lng));
+    this.store.dispatch(actionI18NAddLanguage({ payload: lng }));
   }
 
   /**
@@ -109,7 +103,7 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
    * @param entry The entry to update
    */
   onUpdate(entry: ISentence) {
-    this.store.dispatch(new ActionI18NUpdateEntry(entry));
+    this.store.dispatch(actionI18NUpdateEntry({ payload: entry }));
   }
 
   /**
@@ -117,6 +111,6 @@ export class I18NContainerComponent implements OnInit, OnDestroy {
    * @param entry The entry to create
    */
   onCreate(entry: ISentence) {
-    this.store.dispatch(new ActionI18NUpdateEntry(entry));
+    this.store.dispatch(actionI18NUpdateEntry({ payload: entry }));
   }
 }
