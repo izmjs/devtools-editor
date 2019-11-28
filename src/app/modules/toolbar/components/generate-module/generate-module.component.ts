@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { IGenerateModuleData, State } from '../../toolbar.model';
-import { ActionGenerateModule } from '../../toolbar.actions';
+import { actionGenerateModule } from '../../toolbar.actions';
 
 @Component({
   selector: 'app-generate-module',
@@ -35,7 +30,7 @@ export class GenerateModuleComponent implements OnDestroy {
   }
 
   onCreate() {
-    this.store.dispatch(new ActionGenerateModule(this.data));
+    this.store.dispatch(actionGenerateModule({ payload: this.data }));
     this.dialogRef.close();
   }
 

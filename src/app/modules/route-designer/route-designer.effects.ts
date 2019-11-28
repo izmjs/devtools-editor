@@ -11,10 +11,9 @@ import {
   withLatestFrom
 } from 'rxjs/operators';
 import {
-  ActionLoadItem,
-  ActionLoadItemSuccess,
-  ActionLoadItemError,
-  RouteDesignerActionTypes
+  actionLoadItem,
+  actionLoadItemSuccess,
+  actionLoadItemError
 } from './route-designer.actions';
 import { RouteDesignerService } from './route-designer.service';
 import { State } from './route-designer.model';
@@ -29,20 +28,21 @@ export class RouteDesignerEffects {
     private service: RouteDesignerService
   ) {}
 
-  retrieve = createEffect(
-    () => this.actions$.pipe(
-      ofType(RouteDesignerActionTypes.ACTION_LOAD_ITEM),
+  retrieve = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionLoadItem),
       withLatestFrom(this.store.select(selectCurrentNamespace)),
-      filter(([action, ns]: [ActionLoadItem, INamespace]) => ns && !!ns.key),
-      switchMap(([action, ns]: [ActionLoadItem, INamespace]) =>
+      filter(([action, ns]: [any, INamespace]) => ns && !!ns.key),
+      switchMap(([action, ns]: [any, INamespace]) =>
         this.service
-          .getContent(
-            action.payload ? action.payload.path : '',
-            ns.key
-          )
+          .getContent(action.payload ? action.payload.path : '', ns.key)
           .pipe(
-            map(list => new ActionLoadItemSuccess({ list, current: action.payload })),
-            catchError(error => of(new ActionLoadItemError(error)))
+            map(list =>
+              actionLoadItemSuccess({
+                payload: { list, current: action.payload }
+              })
+            ),
+            catchError(error => of(actionLoadItemError({ payload: error })))
           )
       )
     )

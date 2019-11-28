@@ -5,9 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import { selectCurrentNamespace } from '@modules/toolbar/toolbar.selectors';
-import { ActionEditFile } from '@modules/toolbar/toolbar.actions';
+import { actionEditFile } from '@modules/toolbar/toolbar.actions';
 
-import { ActionLoadItem } from '../../route-designer.actions';
+import { actionLoadItem } from '../../route-designer.actions';
 import { selectRouteDesignerState } from '../../route-designer.selectors';
 import { State, ILoadable, IController } from '../../route-designer.model';
 @Component({
@@ -31,10 +31,7 @@ export class RouterDesignerContainerComponent implements OnInit {
   }
   ngOnInit() {
     this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectRouteDesignerState)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectRouteDesignerState))
       .subscribe(state => {
         this.error = state.error;
         this.folders = state.list;
@@ -42,12 +39,9 @@ export class RouterDesignerContainerComponent implements OnInit {
       });
 
     this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectCurrentNamespace)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectCurrentNamespace))
       .subscribe(() => {
-        this.store.dispatch(new ActionLoadItem());
+        this.store.dispatch(actionLoadItem({}));
       });
   }
 
@@ -59,13 +53,15 @@ export class RouterDesignerContainerComponent implements OnInit {
     if ($event.type === 'controller') {
       const ctrl = <IController>$event;
       return this.store.dispatch(
-        new ActionEditFile({
-          file: ctrl.path,
-          loc: ctrl.loc
+        actionEditFile({
+          payload: {
+            file: ctrl.path,
+            loc: ctrl.loc
+          }
         })
       );
     }
-    this.store.dispatch(new ActionLoadItem($event));
+    this.store.dispatch(actionLoadItem({ payload: $event }));
   }
 
   /**
@@ -74,8 +70,10 @@ export class RouterDesignerContainerComponent implements OnInit {
    */
   redisplay($event: string) {
     this.store.dispatch(
-      new ActionLoadItem({
-        path: $event
+      actionLoadItem({
+        payload: {
+          path: $event
+        }
       })
     );
   }

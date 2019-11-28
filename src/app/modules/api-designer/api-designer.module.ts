@@ -14,9 +14,8 @@ import { ApiDesignerReducer } from './api-designer.reducer';
 @NgModule({
   declarations: [ContainerComponent],
   imports: [
-    CommonModule,
-    CommonModule,
     FormsModule,
+    CommonModule,
     SuiSelectModule,
     ApiDesignerRoutingModule,
     StoreModule.forFeature('api-designer', ApiDesignerReducer),

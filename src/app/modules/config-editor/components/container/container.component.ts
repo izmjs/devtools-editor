@@ -12,7 +12,7 @@ import { takeUntil, filter, withLatestFrom } from 'rxjs/operators';
 
 import { selectConfigEditorState } from '@app/modules/config-editor/config-editor.selectors';
 import { selectCurrentNamespace } from '@app/modules/toolbar/toolbar.selectors';
-import { ActionServerRestart } from '@app/modules/toolbar/toolbar.actions';
+import { actionServerRestart } from '@app/modules/toolbar/toolbar.actions';
 import { MatDialogRef } from '@angular/material';
 
 import { State, IConfig, IItem } from '../../config-editor.model';
@@ -21,7 +21,7 @@ import {
   actionClearItem,
   actionFetchConfig,
   actionEditItemSuccess,
-  actionClearItemSuccess,
+  actionClearItemSuccess
 } from '../../config-editor.actions';
 
 @Component({
@@ -46,12 +46,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.actions$
-      .pipe(
-        ofType(
-          actionEditItemSuccess,
-          actionClearItemSuccess,
-        )
-      )
+      .pipe(ofType(actionEditItemSuccess, actionClearItemSuccess))
       .subscribe(() => {
         this.saved = true;
       });
@@ -67,10 +62,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
       });
 
     this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectConfigEditorState)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectConfigEditorState))
       .subscribe(s => {
         this.error = s.error;
         this.loading = s.loading;
@@ -89,11 +81,13 @@ export class ContainerComponent implements OnInit, OnDestroy {
   onSave(item: IItem) {
     this.store.dispatch(
       actionEditItem({
-        payload: [{
-          key: item.key,
-          value: item.value,
-          scope: item.scope
-        }]
+        payload: [
+          {
+            key: item.key,
+            value: item.value,
+            scope: item.scope
+          }
+        ]
       })
     );
   }
@@ -105,18 +99,20 @@ export class ContainerComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(
       actionClearItem({
-        payload: [{
-          key: item.key,
-          scope: item.scope,
-          remove: true
-        }]
+        payload: [
+          {
+            key: item.key,
+            scope: item.scope,
+            remove: true
+          }
+        ]
       })
     );
   }
 
   restartServer(ev: MouseEvent) {
     ev.preventDefault();
-    this.store.dispatch(new ActionServerRestart());
+    this.store.dispatch(actionServerRestart());
     this.dialogRef.close();
   }
 }

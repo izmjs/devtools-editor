@@ -1,13 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockStore, TestingModule } from '@testing/utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 
 import { State, IApiDesignerState } from '../../api-designer.model';
-import { ApiDesignerService } from '../../api-designer.service';
 import { ContainerComponent } from './container.component';
+import { ApiDesignerService } from '../../api-designer.service';
 
 function createState(state: IApiDesignerState): State {
   return {
@@ -15,7 +16,7 @@ function createState(state: IApiDesignerState): State {
   } as State;
 }
 
-describe('ContainerComponent', () => {
+describe('API designer main container', () => {
   let component: ContainerComponent;
   let fixture: ComponentFixture<ContainerComponent>;
   let store: MockStore<State>;
@@ -23,8 +24,15 @@ describe('ContainerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ContainerComponent],
-      imports: [CoreModule, TestingModule, SharedModule],
-      providers: [ApiDesignerService]
+      imports: [CoreModule, SharedModule, RouterModule.forRoot([])],
+      providers: [
+        ApiDesignerService,
+        provideMockStore({
+          initialState: createState({
+            loading: false
+          })
+        })
+      ]
     }).compileComponents();
   }));
 

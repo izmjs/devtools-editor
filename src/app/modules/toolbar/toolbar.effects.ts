@@ -8,24 +8,24 @@ import {
   delay,
   switchMap,
   catchError,
-  withLatestFrom,
+  withLatestFrom
 } from 'rxjs/operators';
 import { ToolbarService } from './toolbar.service';
 import {
-  ActionEditFile,
-  ActionEditProject,
-  ActionServerCheck,
-  ToolbarActionTypes,
-  ActionServerRestart,
-  ActionServerStarted,
-  ActionGenerateModule,
-  ActionServerRestartError,
-  ActionRetrieveNamespaces,
-  ActionGenerateModuleError,
-  ActionSetCurrentNamespace,
-  ActionGenerateModuleSuccess,
-  ActionRetrieveNamespacesError,
-  ActionRetrieveNamespacesSuccess,
+  actionEditFile,
+  actionAddModule,
+  actionServerCheck,
+  actionServerRestart,
+  actionServerStarted,
+  actionGenerateModule,
+  actionServerRestartError,
+  actionRetrieveNamespaces,
+  actionGenerateModuleError,
+  actionSetCurrentNamespace,
+  actionGenerateModuleSuccess,
+  actionRetrieveNamespacesError,
+  actionRetrieveNamespacesSuccess,
+  actionEditProject
 } from './toolbar.actions';
 import { State, INamespace } from './toolbar.model';
 import { LocalStorageService, NotificationService } from '@app/core';
@@ -43,123 +43,132 @@ export class ToolbarEffects {
     private service: ToolbarService,
     private actions$: Actions<Action>,
     private localStorage: LocalStorageService,
-    private notificationsService: NotificationService,
+    private notificationsService: NotificationService
   ) {}
 
-  retrieveNamespaces = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.RETRIEVE_NAMESPACES),
+  retrieveNamespaces = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionRetrieveNamespaces),
       withLatestFrom(this.store.select(selectCurrentNamespace)),
-      switchMap(([action, ns]: [ActionRetrieveNamespaces, INamespace]) =>
+      switchMap(([action, ns]: [any, INamespace]) =>
         this.service.namespaces().pipe(
           map(data => {
             if (Array.isArray(data) && data.length > 0) {
               const key = this.localStorage.getItem(CURRENT_NAMESPACE_KEY);
               const found = data.find(one => one.key === key);
 
-              if(!found || !ns || found.key !== ns.key) {
+              if (!found || !ns || found.key !== ns.key) {
                 this.store.dispatch(
-                  new ActionSetCurrentNamespace(found || data[0])
+                  actionSetCurrentNamespace({ payload: found || data[0] })
                 );
               }
             }
-            return new ActionRetrieveNamespacesSuccess(data);
+            return actionRetrieveNamespacesSuccess({ payload: data });
           }),
-          catchError(error => of(new ActionRetrieveNamespacesError(error)))
+          catchError(error =>
+            of(actionRetrieveNamespacesError({ payload: error }))
+          )
         )
       )
     )
   );
 
-  restartServer = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.SERVER_RESTART),
-      switchMap((action: ActionServerRestart) =>
+  restartServer = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionServerRestart),
+      switchMap(() =>
         this.service.restartServer().pipe(
           delay(1000),
-          map(() => new ActionServerCheck()),
-          catchError(error => of(new ActionServerRestartError(error)))
+          map(() => actionServerCheck()),
+          catchError(error => of(actionServerRestartError(error)))
         )
       )
     )
   );
 
-  checkServer = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.SERVER_CHECK),
-      switchMap((action: ActionServerCheck) =>
-        this.service.checkServer().pipe(map(() => new ActionServerStarted()))
+  checkServer = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionServerCheck),
+      switchMap(() =>
+        this.service.checkServer().pipe(map(() => actionServerStarted()))
       )
     )
   );
 
   editProject = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.EDIT_PROJECT),
-      switchMap((action: ActionEditProject) =>
-        this.service.editProject().pipe(
-          catchError(() => {
-            // Do nothing
-            return of(true);
-          })
+    () =>
+      this.actions$.pipe(
+        ofType(actionEditProject),
+        switchMap(() =>
+          this.service.editProject().pipe(
+            catchError(() => {
+              // Do nothing
+              return of(true);
+            })
+          )
         )
-      )
-    ),
+      ),
     { dispatch: false }
   );
 
   saveNamespace = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.SET_CURRENT_NAMESPACE),
-      tap((action: ActionSetCurrentNamespace) =>
-        this.localStorage.setItem(CURRENT_NAMESPACE_KEY, action.payload.key)
-      )
-    ),
+    () =>
+      this.actions$.pipe(
+        ofType(actionSetCurrentNamespace),
+        tap(action =>
+          this.localStorage.setItem(CURRENT_NAMESPACE_KEY, action.payload.key)
+        )
+      ),
     { dispatch: false }
   );
 
   editFile = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.EDIT_FILE),
-      withLatestFrom(this.store.select(selectCurrentNamespace)),
-      tap(([action, ns]: [ActionEditFile, INamespace]) =>
-        this.service.editFile(action.payload, ns.key).subscribe()
-      )
-    ),
+    () =>
+      this.actions$.pipe(
+        ofType(actionEditFile),
+        withLatestFrom(this.store.select(selectCurrentNamespace)),
+        tap(([action, ns]: [any, INamespace]) =>
+          this.service.editFile(action.payload, ns.key).subscribe()
+        )
+      ),
     { dispatch: false }
   );
 
-  generateModule = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.GENERATE_MODULE),
-      switchMap((action: ActionGenerateModule) =>
+  generateModule = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actionGenerateModule),
+      switchMap((action: any) =>
         this.service.generateModule(action.payload).pipe(
-          map(() => new ActionGenerateModuleSuccess()),
-          catchError(error => of(new ActionGenerateModuleError(error)))
+          map(() => actionGenerateModuleSuccess()),
+          catchError(error => of(actionGenerateModuleError({ payload: error })))
         )
       )
     )
   );
 
   editSettings = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.ADD_MODULE),
-      tap(() =>
-        this.dialog.open(GenerateModuleComponent, {
-          width: '350px',
-        })
-      )
-    ),
+    () =>
+      this.actions$.pipe(
+        ofType(actionAddModule),
+        tap(() =>
+          this.dialog.open(GenerateModuleComponent, {
+            width: '350px'
+          })
+        )
+      ),
     { dispatch: false }
   );
 
   moduleGenerated = createEffect(
-    () => this.actions$.pipe(
-      ofType(ToolbarActionTypes.GENERATE_MODULE_SUCCESS),
-      tap(() =>
-        this.notificationsService.info('The generation of the module is in progress.')
-      )
-    ),
+    () =>
+      this.actions$.pipe(
+        ofType(actionGenerateModuleSuccess),
+        tap(() =>
+          this.notificationsService.info(
+            'The generation of the module is in progress.'
+          )
+        )
+      ),
     { dispatch: false }
   );
 }

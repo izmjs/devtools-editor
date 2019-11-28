@@ -2,11 +2,11 @@ import { Subject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  ActionServerRestart,
-  ActionRetrieveNamespaces,
-  ActionSetCurrentNamespace,
-  ActionEditProject,
-  ActionAddModule
+  actionAddModule,
+  actionEditProject,
+  actionServerRestart,
+  actionRetrieveNamespaces,
+  actionSetCurrentNamespace
 } from '@modules/toolbar/toolbar.actions';
 
 import { INamespace, State } from '../../toolbar.model';
@@ -29,20 +29,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<State>, private tasks: TasksService) {
     store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectNamespaces)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectNamespaces))
       .subscribe(state => {
         this.namespaces = state.list;
         this.current = state.current;
       });
 
     store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectRestartServer)
-      )
+      .pipe(takeUntil(this.unsubscribe$), select(selectRestartServer))
       .subscribe(state => {
         this.restarting = state.loading;
       });
@@ -54,7 +48,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(new ActionRetrieveNamespaces());
+    this.store.dispatch(actionRetrieveNamespaces());
     this.tasks
       .getMessage()
       .pipe(takeUntil(this.unsubscribe$))
@@ -62,15 +56,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   onNameSpaceChange(ns: INamespace) {
-    this.store.dispatch(new ActionSetCurrentNamespace(ns));
+    this.store.dispatch(actionSetCurrentNamespace({ payload: ns }));
   }
 
   restart() {
-    this.store.dispatch(new ActionServerRestart());
+    this.store.dispatch(actionServerRestart());
   }
 
   editProject() {
-    this.store.dispatch(new ActionEditProject());
+    this.store.dispatch(actionEditProject());
   }
 
   editSettings() {
@@ -78,10 +72,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   refreshNS() {
-    this.store.dispatch(new ActionRetrieveNamespaces());
+    this.store.dispatch(actionRetrieveNamespaces());
   }
 
   createModule() {
-    this.store.dispatch(new ActionAddModule());
+    this.store.dispatch(actionAddModule());
   }
 }

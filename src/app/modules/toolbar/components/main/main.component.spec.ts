@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestingModule, MockStore } from '@testing/utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { SuiSelectModule } from 'ng2-semantic-ui';
+import { SocketIoModule } from 'ngx-socket-io';
+import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 
+import { SharedModule } from '@app/shared';
 import { CoreModule } from '@app/core';
 
 import { State, ToolbarState } from '../../toolbar.model';
 import { ToolbarService } from '../../toolbar.service';
 import { ToolbarComponent } from './main.component';
-import { Store } from '@ngrx/store';
-import { SocketIoModule } from 'ngx-socket-io';
 
 function createState(toolbarState: ToolbarState): State {
   return {
@@ -16,39 +18,40 @@ function createState(toolbarState: ToolbarState): State {
   } as State;
 }
 
-describe('ToolbarComponent', () => {
+describe('Toolbar main container', () => {
   let component: ToolbarComponent;
   let fixture: ComponentFixture<ToolbarComponent>;
   let store: MockStore<State>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ToolbarComponent],
       imports: [
         CoreModule,
-        TestingModule,
+        SharedModule,
         SuiSelectModule,
+        RouterModule.forRoot([]),
         SocketIoModule.forRoot({ options: {}, url: '' })
       ],
-      providers: [ToolbarService]
+      providers: [
+        ToolbarService,
+        provideMockStore({
+          initialState: createState({
+            namespaces: {
+              error: null,
+              loading: false,
+              list: []
+            },
+            restart: {
+              error: null,
+              loading: false
+            }
+          })
+        })
+      ]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     store = TestBed.get(Store);
-    store.setState(
-      createState({
-        namespaces: {
-          error: null,
-          loading: false,
-          list: []
-        },
-        restart: {
-          error: null,
-          loading: false
-        }
-      })
-    );
 
     fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;

@@ -1,7 +1,9 @@
 import { IRouteDesignerState } from './route-designer.model';
+import { Action, createReducer, on } from '@ngrx/store';
 import {
-  RouteDesignerActions,
-  RouteDesignerActionTypes
+  actionLoadItem,
+  actionLoadItemSuccess,
+  actionLoadItemError
 } from './route-designer.actions';
 export const initialState: IRouteDesignerState = {
   error: null,
@@ -9,39 +11,35 @@ export const initialState: IRouteDesignerState = {
   current: null
 };
 
-export function RouteDesignerReducer(
-  state: IRouteDesignerState = initialState,
-  action: RouteDesignerActions
-): IRouteDesignerState {
-  switch (action.type) {
-    case RouteDesignerActionTypes.ACTION_LOAD_ITEM_SUCCESS:
-      return {
-        ...state,
-        error: null,
-        list: action.payload.list,
-        current: action.payload.current,
-      };
-
-    case RouteDesignerActionTypes.ACTION_LOAD_ITEM_ERROR:
-      return {
-        ...state,
-        error: action.payload.error
-      };
-    case RouteDesignerActionTypes.ACTION_LOAD_ITEM:
-      if (!action.payload) {
-        return state;
-      }
-
-      return {
-        ...state,
-        list: state.list.map(one =>
-          one.path === action.payload.path
-            ? { ...one, loading: true }
-            : one
-        )
-      };
-
-    default:
+const reducer = createReducer(
+  initialState,
+  on(actionLoadItem, (state, action) => {
+    if (!action.payload) {
       return state;
-  }
+    }
+
+    return {
+      ...state,
+      list: state.list.map(one =>
+        one.path === action.payload.path ? { ...one, loading: true } : one
+      )
+    };
+  }),
+  on(actionLoadItemSuccess, (state, action) => ({
+    ...state,
+    error: null,
+    list: action.payload.list,
+    current: action.payload.current
+  })),
+  on(actionLoadItemError, (state, action) => ({
+    ...state,
+    error: action.payload.error
+  }))
+);
+
+export function RouteDesignerReducer(
+  state: IRouteDesignerState,
+  action: Action
+) {
+  return reducer(state, action);
 }

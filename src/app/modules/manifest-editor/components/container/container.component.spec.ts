@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockStore, TestingModule } from '@testing/utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 
 import { CoreModule } from '@app/core';
@@ -12,6 +12,7 @@ import { initialState } from '../../manifest-editor.reducer';
 import { MetaComponent } from '../meta/meta.component';
 import { DependenciesComponent } from '../dependencies/dependencies.component';
 import { DependencyItemComponent } from '../dependency-item/dependency-item.component';
+import { RouterModule } from '@angular/router';
 
 function createState(state: IManifestEditorState): State {
   return {
@@ -27,12 +28,12 @@ function createState(state: IManifestEditorState): State {
   } as State;
 }
 
-describe('ContainerComponent', () => {
+describe('Manifest editor main container', () => {
   let component: ContainerComponent;
   let fixture: ComponentFixture<ContainerComponent>;
   let store: MockStore<State>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         MetaComponent,
@@ -40,14 +41,16 @@ describe('ContainerComponent', () => {
         DependenciesComponent,
         DependencyItemComponent
       ],
-      imports: [CoreModule, TestingModule, SharedModule],
-      providers: [ManifestEditorService]
+      imports: [RouterModule.forRoot([]), CoreModule, SharedModule],
+      providers: [
+        ManifestEditorService,
+        provideMockStore({
+          initialState: createState(initialState)
+        })
+      ]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     store = TestBed.get(Store);
-    store.setState(createState(initialState));
 
     fixture = TestBed.createComponent(ContainerComponent);
     component = fixture.componentInstance;

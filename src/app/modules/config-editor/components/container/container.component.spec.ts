@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MatDialogRef } from '@angular/material';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
+import { CoreModule } from '@app/core';
 
 import { State, IConfigEditorState } from '../../config-editor.model';
 import { ConfigEditorService } from '../../config-editor.service';
@@ -12,7 +13,6 @@ import { ContainerComponent } from './container.component';
 import { FieldComponent } from '../field/field.component';
 import { AsTitlePipe } from '../../pipes/as-title.pipe';
 import { MainComponent } from '../main/main.component';
-import { RouterModule } from '@angular/router';
 
 function createState(state: IConfigEditorState): State {
   return {
@@ -28,7 +28,7 @@ function createState(state: IConfigEditorState): State {
   } as State;
 }
 
-describe('ContainerComponent', () => {
+describe('Config editor main container', () => {
   let component: ContainerComponent;
   let fixture: ComponentFixture<ContainerComponent>;
   let store: MockStore<State>;

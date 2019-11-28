@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockStore, TestingModule } from '@testing/utils';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Store } from '@ngrx/store';
 
 import { CoreModule } from '@app/core';
@@ -8,6 +8,7 @@ import { SharedModule } from '@app/shared';
 import { State, IModelDesignerState } from '../../model-designer.model';
 import { ModelDesignerService } from '../../model-designer.service';
 import { ContainerComponent } from './container.component';
+import { RouterModule } from '@angular/router';
 
 function createState(state: IModelDesignerState): State {
   return {
@@ -15,26 +16,26 @@ function createState(state: IModelDesignerState): State {
   } as State;
 }
 
-describe('ContainerComponent', () => {
+describe('Model designer main container', () => {
   let component: ContainerComponent;
   let fixture: ComponentFixture<ContainerComponent>;
   let store: MockStore<State>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ContainerComponent],
-      imports: [CoreModule, TestingModule, SharedModule],
-      providers: [ModelDesignerService]
+      imports: [RouterModule.forRoot([]), CoreModule, SharedModule],
+      providers: [
+        ModelDesignerService,
+        provideMockStore({
+          initialState: createState({
+            loading: false
+          })
+        })
+      ]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     store = TestBed.get(Store);
-    store.setState(
-      createState({
-        loading: false
-      })
-    );
 
     fixture = TestBed.createComponent(ContainerComponent);
     component = fixture.componentInstance;
