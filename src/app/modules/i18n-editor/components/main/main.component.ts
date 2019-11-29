@@ -142,8 +142,12 @@ export class I18nComponent implements OnChanges {
    * @param entry The entry to update
    * @param index The index of the entry
    */
-  onEdit(entry: IEditableSentence, index: number) {
+  onEdit(entry: IEditableSentence, index: number, ev?: MouseEvent) {
     if (this.working || this.editableEntries.includes(index)) {
+      return;
+    }
+
+    if (ev && ev.target && (ev.target as any).nodeName === 'INPUT') {
       return;
     }
 
