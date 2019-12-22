@@ -50,16 +50,6 @@ export class ContainerComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.saved = true;
       });
-    this.store
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        select(selectConfigEditorState),
-        withLatestFrom(this.store.select(selectCurrentNamespace)),
-        filter(([s, ns]) => s.config.length > 0 && ns && !!ns.key)
-      )
-      .subscribe(([s, ns]) => {
-        this.current = s.config.find(one => one.name === ns.key.split(':')[1]);
-      });
 
     this.store
       .pipe(takeUntil(this.unsubscribe$), select(selectConfigEditorState))

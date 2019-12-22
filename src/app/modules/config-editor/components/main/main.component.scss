@@ -1,5 +1,13 @@
+sui-tabset ::ng-deep {
+  div.ui.menu.tabular {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
 form.ui.form {
-  max-height: 370px;
+  max-height: 350px;
+  min-height: 350px;
   overflow-y: auto;
   max-width: initial;
 }
