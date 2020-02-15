@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, TestingModule } from '@testing/utils';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import { SharedModule } from '@app/shared';

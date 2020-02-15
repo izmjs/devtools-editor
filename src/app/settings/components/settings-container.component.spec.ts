@@ -1,6 +1,6 @@
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { MatSlideToggle } from '@angular/material';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TestingModule, MockStore } from '@testing/utils';

@@ -17,7 +17,7 @@ import {
 } from '@app/modules/config-editor/config-editor.actions';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ContainerComponent } from './components/container/container.component';
 
 @Injectable()

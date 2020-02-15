@@ -11,6 +11,7 @@ export interface IItem {
   defaultValue?: number;
   scope?: string;
   link?: string;
+  field?: any;
 }
 
 export interface IKeyValue {

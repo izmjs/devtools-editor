@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { ControllersExplorerComponent } from './controllers-explorer.component';
 import { RouterDesignerContainerComponent } from '../container/container.component';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';

@@ -11,9 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntil, filter, withLatestFrom } from 'rxjs/operators';
 
 import { selectConfigEditorState } from '@app/modules/config-editor/config-editor.selectors';
-import { selectCurrentNamespace } from '@app/modules/toolbar/toolbar.selectors';
 import { actionServerRestart } from '@app/modules/toolbar/toolbar.actions';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { State, IConfig, IItem } from '../../config-editor.model';
 import {
