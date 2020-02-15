@@ -27,7 +27,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./container.component.scss']
 })
 export class I18NContainerComponent implements OnInit, OnDestroy {
-  @ViewChild('compo', { static: false }) comp: I18nComponent;
+  @ViewChild('compo') comp: I18nComponent;
   languages: ILanguage[] = [];
   sentences: ISentence[] = [];
   i18n$: Observable<II18NState>;
