@@ -8,10 +8,18 @@ import { Subject } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store, select, Action } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { takeUntil, filter, withLatestFrom } from 'rxjs/operators';
+import {
+  takeUntil,
+  distinctUntilChanged,
+  tap,
+  first,
+  filter
+} from 'rxjs/operators';
 
-import { selectConfigEditorState } from '@app/modules/config-editor/config-editor.selectors';
-import { selectCurrentNamespace } from '@app/modules/toolbar/toolbar.selectors';
+import {
+  selectConfigEditorState,
+  selectConfigList
+} from '@app/modules/config-editor/config-editor.selectors';
 import { actionServerRestart } from '@app/modules/toolbar/toolbar.actions';
 import { MatDialogRef } from '@angular/material';
 
@@ -34,7 +42,7 @@ export class ContainerComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
   error: HttpErrorResponse;
   loading: boolean;
-  list: IConfig[];
+  list: IConfig[] = [];
   current: IConfig;
   saved = false;
 
@@ -56,9 +64,17 @@ export class ContainerComponent implements OnInit, OnDestroy {
       .subscribe(s => {
         this.error = s.error;
         this.loading = s.loading;
-        // Clone the list
-        this.list = JSON.parse(JSON.stringify(s.config));
       });
+
+    this.store
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        select(selectConfigList),
+        filter(list => list.length > 0),
+        first(),
+        tap(list => (this.list = JSON.parse(JSON.stringify(list))))
+      )
+      .subscribe();
 
     this.store.dispatch(actionFetchConfig());
   }

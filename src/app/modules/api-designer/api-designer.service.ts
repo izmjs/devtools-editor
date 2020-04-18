@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-const PREFIX = '/api/v1/devtools';
+const PREFIX = '/devtools';
 
 @Injectable()
 export class ApiDesignerService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 }

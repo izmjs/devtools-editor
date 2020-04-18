@@ -42,6 +42,13 @@
       (ngModelChange)="onEdit(model, item, true)">
     </sui-checkbox>
   </div>
+  <div *ngIf="item.field?.type==='textarea'">
+    <textarea
+      #model="ngModel"
+      [(ngModel)]="item.value"
+      (ngModelChange)="onEdit(model, item, true)">
+    </textarea>
+  </div>
   <div *ngIf="!item.field?.type && (!item.schema || item.schema.type==='string')">
     <div *ngIf="item.schema?.enum; else elseBlock">
       <sui-select

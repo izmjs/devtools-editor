@@ -25,10 +25,19 @@ export interface IConfig {
   items: IItem[];
 }
 
+export interface ISharedSettings {
+  port?: number;
+  secure?: boolean;
+  cors?: boolean;
+  host?: string;
+  prefix?: string;
+}
+
 export interface IConfigEditorState {
   loading: boolean;
   config: IConfig[];
   error: HttpErrorResponse;
+  settings: ISharedSettings;
 }
 
 export interface State extends AppState {

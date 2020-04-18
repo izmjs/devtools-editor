@@ -47,7 +47,10 @@ describe('Config editor main container', () => {
           initialState: createState({
             loading: false,
             error: null,
-            config: []
+            config: [],
+            settings: {
+
+            }
           })
         }),
         ConfigEditorService,

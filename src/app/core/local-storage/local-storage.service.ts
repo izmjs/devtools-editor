@@ -13,15 +13,15 @@ export class LocalStorageService {
           .replace(APP_PREFIX, '')
           .toLowerCase()
           .split('.')
-          .map(key =>
-            key
-              .split('-')
-              .map((token, index) =>
-                index === 0
-                  ? token
-                  : token.charAt(0).toUpperCase() + token.slice(1)
-              )
-              .join('')
+          .map(
+            key => key
+            // .split('-')
+            // .map((token, index) =>
+            //   index === 0
+            //     ? token
+            //     : token.charAt(0).toUpperCase() + token.slice(1)
+            // )
+            // .join('')
           );
         let currentStateRef = state;
         stateKeys.forEach((key, index) => {

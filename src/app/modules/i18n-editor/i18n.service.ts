@@ -2,19 +2,34 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITranslations, ISentence, IKeyValue } from './i18n.model';
+import { Store, select } from '@ngrx/store';
+import { State } from '../toolbar/toolbar.model';
+import { selectBaseUrl } from '../config-editor/config-editor.selectors';
+import { tap } from 'rxjs/operators';
 
-const PREFIX = '/api/v1/devtools/i18n';
+const PREFIX = '/devtools/i18n';
 
 @Injectable()
 export class I18NService {
-  constructor(private http: HttpClient) {}
+  private prefix = '/api/v1';
+  constructor(
+    private readonly http: HttpClient,
+    private readonly store: Store<State>
+  ) {
+    this.store
+      .pipe(
+        select(selectBaseUrl),
+        tap(value => (this.prefix = `${value}${PREFIX}`))
+      )
+      .subscribe();
+  }
 
   /**
    * Get i18n of a specific module
    * @param ns The namespace (usually it is has the form `type`:`module`. `type`: The type of the module (`vendor` or `modules`), and `module`: The name of the module)
    */
   retrieve(ns = 'modules:devtools'): Observable<ITranslations> {
-    return this.http.get<ITranslations>(PREFIX, {
+    return this.http.get<ITranslations>(this.prefix, {
       params: {
         ns
       }
@@ -30,7 +45,7 @@ export class I18NService {
     data: ISentence | ISentence[],
     ns = 'modules:devtools'
   ): Observable<void> {
-    return this.http.post<void>(PREFIX, data, {
+    return this.http.post<void>(this.prefix, data, {
       params: {
         ns
       }
@@ -43,7 +58,7 @@ export class I18NService {
    * @param ns The namespace (usually it is has the form `type`:`module`. `type`: The type of the module (`vendor` or `modules`), and `module`: The name of the module)
    */
   remove(keys: string[], ns = 'modules:devtools'): Observable<void> {
-    return this.http.post<void>(`${PREFIX}/delete`, keys, {
+    return this.http.post<void>(`${this.prefix}/delete`, keys, {
       params: {
         ns
       }
@@ -57,7 +72,7 @@ export class I18NService {
    */
   translate(code: string, ns = 'modules:devtools'): Observable<IKeyValue> {
     return this.http.post<IKeyValue>(
-      `${PREFIX}/translate`,
+      `${this.prefix}/translate`,
       { code },
       {
         params: {
@@ -73,7 +88,7 @@ export class I18NService {
    * @param ns The namespace (usually it is has the form `type`:`module`. `type`: The type of the module (`vendor` or `modules`), and `module`: The name of the module)
    */
   removeLanguages(list: string[], ns = 'modules:devtools'): Observable<void> {
-    return this.http.post<void>(`${PREFIX}/lngs/delete`, list, {
+    return this.http.post<void>(`${this.prefix}/lngs/delete`, list, {
       params: {
         ns
       }
