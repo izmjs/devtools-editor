@@ -124,8 +124,8 @@ export class ConfigEditorEffects {
     () =>
       this.actions$.pipe(
         ofType(actionFetchConfigSuccess, actionEditSharedSettings),
-        withLatestFrom(this.store.pipe(select(selectConfigEditorState))),
-        tap(([action, state]) => this.storage.setItem(CONFIG_EDITOR_KEY, state))
+        withLatestFrom(this.store.pipe(select(selectSharedSettingsValue))),
+        tap(([action, state]) => this.storage.setItem(`${CONFIG_EDITOR_KEY}.settings`, state))
       ),
     { dispatch: false }
   );
