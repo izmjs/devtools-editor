@@ -25,7 +25,7 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material';
 import { ContainerComponent } from './components/container/container.component';
 import { State } from '../toolbar/toolbar.model';
 import {

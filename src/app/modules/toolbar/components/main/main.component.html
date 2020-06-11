@@ -1,16 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row class="toolbar-icons">
     <span class="example-spacer"></span>
-    <select
-      class="selection"
-      placeholder="Change the namespace"
-      [ngModel]="current"
-      (ngModelChange)="onNameSpaceChange($event)">
-      <option
-        *ngFor="let option of namespaces"
-        [ngValue]="option">{{ option.name }}</option>
-    </select>
-    <!-- <sui-select
+    <sui-select
       class="selection"
       placeholder="Change the namespace"
       labelField="name"
@@ -20,7 +11,7 @@
         *ngFor="let option of namespaces"
         [value]="option">
       </sui-select-option>
-    </sui-select> -->
+    </sui-select>
     <button matTooltip="Refresh namespaces list" mat-icon-button="mat-icon-button" (click)="refreshNS()">
       <i class="material-icons">autorenew</i>
     </button>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 

@@ -51,7 +51,7 @@
   </div>
   <div *ngIf="!item.field?.type && (!item.schema || item.schema.type==='string')">
     <div *ngIf="item.schema?.enum; else elseBlock">
-      <!-- <sui-select
+      <sui-select
         class="selection"
         #model="ngModel"
         [(ngModel)]="item.value"
@@ -61,7 +61,7 @@
           *ngFor="let enumeration of item.schema?.enum"
           [value]="enumeration">
         </sui-select-option>
-      </sui-select> -->
+      </sui-select>
     </div>
     <ng-template #elseBlock>
       <div class="ui input">

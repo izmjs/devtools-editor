@@ -21,7 +21,7 @@ import {
   selectConfigList
 } from '@app/modules/config-editor/config-editor.selectors';
 import { actionServerRestart } from '@app/modules/toolbar/toolbar.actions';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material';
 
 import { State, IConfig, IItem } from '../../config-editor.model';
 import {

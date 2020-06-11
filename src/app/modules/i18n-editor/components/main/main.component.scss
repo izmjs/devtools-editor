@@ -89,12 +89,14 @@ div.main {
   }
 
   .add-language {
-    select.selection {
+    sui-select {
       width: 200px;
-      font-size: 16px;
-      border-color: #e2e2e2;
-      border-radius: 5px;
-      color: rgb(0, 0, 0, 0.85);
+
+      ::ng-deep div.text {
+        font-size: 16px;
+        margin-top: 16px;
+        margin-left: 10px;
+      }
     }
 
     .ui.circular.button {

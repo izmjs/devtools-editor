@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable()
 export class NotificationService {

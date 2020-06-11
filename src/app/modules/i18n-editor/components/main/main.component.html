@@ -90,13 +90,15 @@
       <button class="ui grey button" (click)="onAddSentence()" [disabled]="working">Add sentence</button>
     </div>
     <div class="ui right floated buttons add-language" *ngIf="isAddLanguage">
-      <select class="selection" [(ngModel)]="lngToAdd">
-        <option *ngFor="let option of availableLanguages()" [ngValue]="option">{{ option.label }}</option>
-      </select>
+      <sui-select class="selection"
+        [optionFormatter]="formatter"
+        #select>
+        <sui-select-option *ngFor="let option of availableLanguages()" [value]="option"></sui-select-option>
+      </sui-select>
       <button class="circular mini ui icon button" (click)="isAddLanguage=false" tabindex="-1" [disabled]="working">
         <i class="undo icon"></i>
       </button>
-      <button class="circular mini ui icon button" (click)="onAddLanguage(lngToAdd)" tabindex="-1" [disabled]="working">
+      <button class="circular mini ui icon button" (click)="onAddLanguage(select.selectedOption)" tabindex="-1" [disabled]="working">
         <i class="check icon"></i>
       </button>
     </div>
