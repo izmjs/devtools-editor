@@ -41,7 +41,7 @@ export const selectConfigEditorState = createFeatureSelector<
 export const selectSharedSettingsValue = createSelector(
   selectConfigEditorState,
   (state): ISharedSettings =>
-    (state.config || []).reduce((prev, cur) => {
+    state.config.reduce((prev, cur) => {
       const result = { ...prev };
       cur.items.forEach(item => {
         const found = SHARED_SETTINGS.find(one => one.name === item.key);
@@ -61,7 +61,7 @@ export const selectSharedSettings = createSelector(
 
 export const selectConfigList = createSelector(
   selectConfigEditorState,
-  state => state.config || [],
+  state => state.config
 );
 
 export const selectBaseUrl = createSelector(selectSharedSettings, state =>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const APP_PREFIX = 'APP-';
+const APP_PREFIX = 'ANMS-';
 
 @Injectable()
 export class LocalStorageService {
