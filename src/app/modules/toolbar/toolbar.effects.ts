@@ -30,7 +30,7 @@ import {
 import { State, INamespace } from './toolbar.model';
 import { LocalStorageService, NotificationService } from '@app/core';
 import { selectCurrentNamespace } from './toolbar.selectors';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { GenerateModuleComponent } from './components/generate-module/generate-module.component';
 
 export const CURRENT_NAMESPACE_KEY = 'CURRENT_NS';

@@ -4,32 +4,29 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import {
-  MatTreeModule,
-  MatMenuModule,
-  MatTabsModule,
-  MatCardModule,
-  MatListModule,
-  MatIconModule,
-  MatChipsModule,
-  MatInputModule,
-  MatBadgeModule,
-  MatButtonModule,
-  MatDialogModule,
-  MatSliderModule,
-  MatSelectModule,
-  MatStepperModule,
-  MatToolbarModule,
-  MatDividerModule,
-  MatTooltipModule,
-  MatSidenavModule,
-  MatCheckboxModule,
-  MatSnackBarModule,
-  MatSlideToggleModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import {
@@ -143,7 +140,6 @@ import { TruncatePipe } from './truncate.pipe';
     MatSnackBarModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
 

@@ -236,6 +236,7 @@ export class I18nComponent implements OnChanges {
    * Will be executed every time we click the add language button
    */
   onAddLanguage(lng: ILanguage) {
+    debugger;
     if (lng) {
       this.addLanguage.emit(lng);
     }

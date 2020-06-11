@@ -16,9 +16,15 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
-sui-select {
-  font-size: 14px;
+select.selection {
   width: 230px;
+  font-size: 14px;
+  border-color: #e2e2e2;
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.85);
+  height: 35px;
+  margin-top: 2px;
+  padding-left: 5px;
 }
 
 .toolbar-icons button {
