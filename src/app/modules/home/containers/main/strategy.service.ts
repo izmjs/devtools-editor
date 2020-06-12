@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { State, IHomeState, IPostmanCollection } from '../../home.model';
@@ -25,8 +25,10 @@ export class StrategyService {
   listen() {
     this.collections$ = this.store.select(selectCollections);
     this.loading$ = this.store.select(selectCollectionsLoading);
-    this.currentCol$ = this.store.select(selectCurrentCollection).pipe(
-      withLatestFrom(this.store.select(selectCollections)),
+    this.currentCol$ = combineLatest(
+      this.store.select(selectCurrentCollection),
+      this.store.select(selectCollections),
+    ).pipe(
       map(([current, list]) => {
         return current ? list.find(one => one.id === current.id): current
       }),
