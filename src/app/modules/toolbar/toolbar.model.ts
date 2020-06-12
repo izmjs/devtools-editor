@@ -16,12 +16,12 @@ export interface ToolbarState {
   namespaces: {
     loading: boolean;
     list: INamespace[];
-    error: HttpErrorResponse;
+    error: any;
     current?: INamespace;
   };
   restart: {
     loading: boolean;
-    error: HttpErrorResponse;
+    error: any;
   };
 }
 

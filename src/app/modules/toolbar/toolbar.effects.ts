@@ -38,12 +38,12 @@ export const CURRENT_NAMESPACE_KEY = 'CURRENT_NS';
 @Injectable()
 export class ToolbarEffects {
   constructor(
-    private dialog: MatDialog,
-    private store: Store<State>,
-    private service: ToolbarService,
-    private actions$: Actions<Action>,
-    private localStorage: LocalStorageService,
-    private notificationsService: NotificationService
+    private readonly dialog: MatDialog,
+    private readonly store: Store<State>,
+    private readonly service: ToolbarService,
+    private readonly actions$: Actions<Action>,
+    private readonly localStorage: LocalStorageService,
+    private readonly notificationsService: NotificationService
   ) {}
 
   retrieveNamespaces = createEffect(() =>

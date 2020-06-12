@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+  <p>Please specify your <a target="_blank" [href]="postmanDocUrl">Postman key</a></p>
+  <mat-form-field>
+    <mat-label>Postman key</mat-label>
+    <input matInput [(ngModel)]="key">
+  </mat-form-field>
+  <span class="small">Read about postman keys <a target="_blank" [href]="postmanDocUrl">here</a></span>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="key" cdkFocusInitial>Save</button>
+</div>

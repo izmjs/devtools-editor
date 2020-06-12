@@ -40,7 +40,7 @@ import {
 })
 export class ContainerComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
-  error: HttpErrorResponse;
+  error: any;
   loading: boolean;
   list: IConfig[] = [];
   current: IConfig;

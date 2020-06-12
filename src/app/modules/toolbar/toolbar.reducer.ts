@@ -47,7 +47,7 @@ const reducer = createReducer(
     namespaces: {
       ...state.namespaces,
       loading: false,
-      error: action.payload
+      error: action.payload.error
     }
   })),
   on(actionSetCurrentNamespace, (state, action) => ({
@@ -76,7 +76,7 @@ const reducer = createReducer(
     ...state,
     restart: {
       ...state.restart,
-      error: action.payload,
+      error: action.payload.error,
       loading: false
     }
   }))

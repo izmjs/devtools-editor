@@ -46,7 +46,7 @@ export interface II18NState {
   loading: boolean;
   lngs: ILanguage[];
   entries: ISentence[];
-  error: HttpErrorResponse;
+  error: any;
 }
 
 export interface State extends AppState {

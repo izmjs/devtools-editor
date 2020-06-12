@@ -6,7 +6,7 @@ import { SettingsContainerComponent } from './settings';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -43,6 +43,13 @@ const routes: Routes = [
       )
   },
   {
+    path: 'home',
+    loadChildren: () =>
+      import('./modules/home/home.module').then(
+        m => m.HomeModule
+      )
+  },
+  {
     path: 'manifest-editor',
     loadChildren: () =>
       import('./modules/manifest-editor/manifest-editor.module').then(
@@ -51,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'about'
+    redirectTo: 'home'
   }
 ];
 

@@ -18,7 +18,7 @@ import { State, ILoadable, IController } from '../../route-designer.model';
 })
 export class RouterDesignerContainerComponent implements OnInit {
   private unsubscribe$: Subject<void> = new Subject<void>();
-  error: HttpErrorResponse;
+  error: any;
   loading: boolean;
   current: ILoadable;
   folders: ILoadable[];

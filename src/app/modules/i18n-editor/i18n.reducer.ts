@@ -30,7 +30,7 @@ const reducer = createReducer(
   on(actionI18NRetrieveError, (state, action) => ({
     ...state,
     loading: false,
-    error: action.payload
+    error: action.payload.error
   }))
 );
 

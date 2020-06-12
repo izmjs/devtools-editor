@@ -1,0 +1,49 @@
+<div class="main">
+  <h1>Welcome to the devtools</h1>
+  <p>The current version still in beta mode. Please contact us to report any issue</p>
+  <div class="tools">
+    <a mat-stroked-button href="/api/v1/devtools/postman/doc?download=true">
+      <i class="material-icons">
+        cloud_download
+      </i> Download postman doc
+    </a>
+    <a mat-stroked-button href="/api/v1/devtools/postman/environment?download=true">
+      <i class="material-icons">
+        cloud_download
+      </i> Download postman variables
+    </a>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12"><strong>OR</strong> Sync with an existing collection</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-3">
+      <div class="ui input">
+        <button *ngIf="!(strategy.loading$ | async)"
+          matTooltip="Refresh collections" mat-icon-button="mat-icon-button"
+          (click)="strategy.loadCollections()">
+          <i class="material-icons">refresh</i>
+        </button>
+        <mat-spinner *ngIf="strategy.loading$ | async" [diameter]="20"></mat-spinner>
+        <sui-select class="selection"
+          [options]="strategy.collections$ | async"
+          [isSearchable]="true"
+          [ngModel]="strategy.currentCol$ | async"
+          [isDisabled]="strategy.loading$ | async"
+          (selectedOptionChange)="strategy.setCurrentCol($event)"
+          labelField="name"
+          #select>
+          <sui-select-option *ngFor="let option of select.filteredOptions"
+            [value]="option">
+          </sui-select-option>
+        </sui-select>
+        <button *ngIf="(strategy.currentCol$ | async)"
+          [disabled]="strategy.loading$ | async"
+          matTooltip="Synchronize" mat-icon-button="mat-icon-button"
+          (click)="strategy.syncCurrentCol()">
+          <i class="material-icons">sync</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

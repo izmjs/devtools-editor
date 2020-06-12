@@ -63,7 +63,7 @@ const reducer = createReducer(
       ...state.meta,
       data: null,
       loading: true,
-      error: action.payload
+      error: action.payload.error
     }
   })),
   on(actionListInstalled, state => ({
@@ -89,7 +89,7 @@ const reducer = createReducer(
     dependencies: {
       ...state.dependencies,
       loading: false,
-      error: action.payload
+      error: action.payload.error
     }
   })),
   on(actionSearchModule, state => ({
@@ -114,7 +114,7 @@ const reducer = createReducer(
     dependencies: {
       ...state.dependencies,
       loading: false,
-      error: action.payload
+      error: action.payload.error
     }
   }))
 );

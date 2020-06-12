@@ -34,7 +34,7 @@ export interface IParam {
 export interface IRouteDesignerState {
   list: ILoadable[];
   current: ILoadable;
-  error: HttpErrorResponse;
+  error: any;
 }
 
 export interface State extends AppState {

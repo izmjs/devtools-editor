@@ -40,11 +40,11 @@ export interface IManifestEditorState {
   meta: {
     loading: boolean;
     data: IMetadata;
-    error: HttpErrorResponse;
+    error: any;
   };
   dependencies: {
     loading: boolean;
-    error: HttpErrorResponse;
+    error: any;
     list: IMetadata[];
     installed: ILightMetadata[];
   };

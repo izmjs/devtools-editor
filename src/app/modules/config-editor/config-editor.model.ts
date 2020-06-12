@@ -1,6 +1,11 @@
 import { State as AppState } from '@modules/toolbar/toolbar.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
+export interface IField {
+  type: string;
+  options?: any;
+}
+
 export interface IItem {
   key: string;
   envVar?: string;
@@ -11,6 +16,7 @@ export interface IItem {
   defaultValue?: number;
   scope?: string;
   link?: string;
+  field?: IField;
 }
 
 export interface IKeyValue {
@@ -36,7 +42,7 @@ export interface ISharedSettings {
 export interface IConfigEditorState {
   loading: boolean;
   config: IConfig[];
-  error: HttpErrorResponse;
+  error: any;
   settings: ISharedSettings;
 }
 

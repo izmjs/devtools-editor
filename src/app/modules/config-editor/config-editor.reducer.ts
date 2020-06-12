@@ -27,7 +27,7 @@ const reducer = createReducer(
   on(actionFetchConfigError, (state, action) => ({
     ...state,
     loading: true,
-    error: action.payload,
+    error: action.payload.error,
     config: []
   })),
   on(actionEditSharedSettings, (state, action) => ({
