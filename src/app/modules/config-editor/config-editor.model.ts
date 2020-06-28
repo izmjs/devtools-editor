@@ -17,6 +17,7 @@ export interface IItem {
   scope?: string;
   link?: string;
   field?: IField;
+  show?: boolean;
 }
 
 export interface IKeyValue {

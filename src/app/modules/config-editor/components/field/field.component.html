@@ -26,13 +26,16 @@
       [placeholder]="item.defaultValue || item.name">
   </div>
   <div *ngIf="item.field?.type==='password'">
-    <div class="ui input">
-      <input type="password"
+    <div class="ui right labeled input pwd">
+      <input [type]="item.show ? 'text': 'password'"
         autocomplete="new-password"
         #model="ngModel"
         [(ngModel)]="item.value"
         (blur)="onEdit(model, item)"
         [placeholder]="item.defaultValue || item.name">
+      <div class="ui basic label">
+        <i class="icon eye" [ngClass]="{slash: !item.show}" (click)="item.show=!item.show"></i>
+      </div>
     </div>
   </div>
   <div *ngIf="item.field?.type==='checkbox' || item.schema?.type==='boolean'">

@@ -16,7 +16,7 @@ export class AppErrorHandler extends ErrorHandler {
     const err = error as any;
     let displayMessage = 'An error occurred.';
 
-    if(err.error && err.error.message) {
+    if (err.error && err.error.message) {
       displayMessage += ` ${err.error.message}`;
     } else if (!environment.production) {
       displayMessage += ' See console for details.';

@@ -30,7 +30,7 @@ export class StrategyService {
       this.store.select(selectCollections),
     ).pipe(
       map(([current, list]) => {
-        return current ? list.find(one => one.id === current.id): current
+        return current ? list.find(one => one.id === current.id) : current
       }),
     );
   }
