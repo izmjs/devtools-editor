@@ -3,6 +3,7 @@
     <a class="circular mini ui icon" suiPopup
       *ngIf="item.description && item.link"
       [popupText]="item.description"
+      target="_blank"
       [href]="item.link || ''">
       <i class="info circle icon"></i>
     </a>
